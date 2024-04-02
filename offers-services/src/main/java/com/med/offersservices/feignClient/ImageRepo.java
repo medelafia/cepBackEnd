@@ -1,4 +1,4 @@
-package com.med.offersservices.repositry;
+package com.med.offersservices.feignClient;
 
 import com.med.offersservices.model.Image;
 import org.springframework.cloud.openfeign.FeignClient;

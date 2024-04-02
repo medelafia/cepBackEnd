@@ -3,6 +3,7 @@ package com.med.imageservice.web;
 import com.med.imageservice.entity.Image;
 import com.med.imageservice.service.ImageServices;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/images")

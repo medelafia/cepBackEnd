@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/trainStation")
+@RequestMapping("/trainStations/")
 public class TrainStationController {
     TrainStationService trainStationService ;
     public TrainStationController(TrainStationService trainStationService){

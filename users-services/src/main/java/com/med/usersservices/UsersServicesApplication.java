@@ -1,6 +1,8 @@
 package com.med.usersservices;
 
+import com.med.usersservices.entity.Airline;
 import com.med.usersservices.entity.Client;
+import com.med.usersservices.service.AirlineServices;
 import com.med.usersservices.service.ClientServices;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -16,18 +18,15 @@ public class UsersServicesApplication {
         SpringApplication.run(UsersServicesApplication.class, args);
     }
     @Bean
-    CommandLineRunner commandLineRunner(ClientServices clientServices) {
+    CommandLineRunner commandLineRunner(AirlineServices airlineServices) {
         return args -> {
-            clientServices.saveClient(Client.builder()
+            airlineServices.registerNewAirline(Airline.builder()
                             .username("mohamed")
                             .password("med@29072003")
-                            .tel("0658045721")
-                            .authority("ADMIN")
+                            .CompanyName("royal moroc")
+                            .country("maroc")
                             .email("mohamedelafia@gmail.com")
-                            .age(20)
-                            .lastName("el afia")
-                            .firstName("mohamed")
-                            .sexe("man")
+                            .tel("0658045721")
                     .build()) ;
         };
     }

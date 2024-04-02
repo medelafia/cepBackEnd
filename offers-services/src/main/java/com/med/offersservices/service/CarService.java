@@ -1,9 +1,8 @@
 package com.med.offersservices.service;
 
 import com.med.offersservices.entity.Car;
-import com.med.offersservices.model.Image;
 import com.med.offersservices.repositry.CarRepo;
-import com.med.offersservices.repositry.ImageRepo;
+import com.med.offersservices.feignClient.ImageRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,16 +18,13 @@ public class CarService {
     public Car addNewCar(Car car){
         return carRepo.save(car) ;
     }
-    public List<Car> getCarsByIds(List<Integer> ids)  {
-        return carRepo.findAllById(ids) ;
-    }
-    public Car getCarById(int id){
-        Car car = carRepo.findById(id).get() ;
-        Image image = imageRepo.getImageById(car.getImageId()) ;
-        car.setImage(image);
-        return car ;
+    public List<Car> getCarsByCarsAgencyId(int id) {
+        return carRepo.findAllByCarAgencyId(id);
     }
     public void deleteCarById(int id) {
         carRepo.deleteById(id);
+    }
+    public List<Car> getAllCars(){
+        return carRepo.findAll() ;
     }
 }

@@ -10,18 +10,14 @@ import java.util.List;
 
 @Service
 public class ClientServices {
-    @Autowired
     ClientRepo clientRepo ;
-    public Client getClientById(int id) {
-        return clientRepo.getClientById(id);
+    public ClientServices(ClientRepo clientRepo) {
+        this.clientRepo = clientRepo ;
     }
-    public Client saveClient(Client client) {
-        return clientRepo.save(client) ;
+    public Client registerNewClient(Client client) {
+        return clientRepo.save(client);
     }
     public List<Client> getAllClients() {
         return clientRepo.findAll() ;
-    }
-    public void deleteClientById(int id) {
-        clientRepo.deleteById(id);
     }
 }

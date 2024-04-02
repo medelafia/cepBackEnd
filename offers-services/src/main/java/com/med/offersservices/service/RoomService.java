@@ -12,13 +12,16 @@ public class RoomService {
     public RoomService(RoomRepo roomRepo) {
         this.roomRepo = roomRepo ;
     }
-    public List<Room> getRoomsByIds(List<Integer> ids) {
-        return roomRepo.findAllById(ids) ;
+    public List<Room> getRoomsByHotelId(int id) {
+        return roomRepo.findAllByHotelId(id) ;
     }
     public Room addNewRoom(Room room) {
         return roomRepo.save(room) ;
     }
     public void deleteRoomById(int id){
         roomRepo.deleteById(id);
+    }
+    public List<Room> getAllRooms() {
+        return roomRepo.findAll() ;
     }
 }

@@ -17,7 +17,7 @@ public class OffersServicesApplication {
     public static void main(String[] args) {
         SpringApplication.run(OffersServicesApplication.class, args);
     }
-    @Bean
+    //@Bean
     CommandLineRunner commandLineRunner(FlightService flightService) {
         return  args ->  {
             flightService.addNewFlight(Flight.builder()

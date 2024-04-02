@@ -4,10 +4,10 @@ import com.med.offersservices.enums.FuelType;
 import com.med.offersservices.enums.StyleType;
 import com.med.offersservices.enums.TransType;
 import com.med.offersservices.model.Image;
+import com.med.offersservices.superClasses.Offer;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import java.util.List;
 
 @Entity @AllArgsConstructor @NoArgsConstructor @Getter @Setter @SuperBuilder
 public class Car extends Offer {
@@ -24,4 +24,5 @@ public class Car extends Offer {
     private int imageId;
     @Transient
     private Image image ;
+    private int carAgencyId ;
 }

@@ -1,4 +1,4 @@
-package com.med.offersservices.entity;
+package com.med.offersservices.superClasses;
 
 import jakarta.persistence.MappedSuperclass;
 import lombok.*;
@@ -10,7 +10,7 @@ import java.util.Date;
 @MappedSuperclass
 @AllArgsConstructor @NoArgsConstructor @SuperBuilder
 @Setter @Getter
-public class Travel extends Offer{
+public class Travel extends Offer {
     private int nbPlaces ;
     private Date date ;
     private Instant beginTime ;

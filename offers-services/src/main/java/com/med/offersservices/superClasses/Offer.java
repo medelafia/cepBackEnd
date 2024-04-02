@@ -1,4 +1,4 @@
-package com.med.offersservices.entity;
+package com.med.offersservices.superClasses;
 
 import jakarta.persistence.*;
 import lombok.*;
