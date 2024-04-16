@@ -18,11 +18,4 @@ public class User {
     private String authority ;
     private String email ;
     private String tel ;
-    public User(String username , String password , String authority , String email , String tel ) {
-        this.username = username ;
-        this.password = password ;
-        this.authority = authority ;
-        this.email = email ;
-        this.tel = tel ;
-    }
 }

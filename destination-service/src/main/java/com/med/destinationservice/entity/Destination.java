@@ -1,9 +1,7 @@
 package com.med.destinationservice.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.med.destinationservice.enums.DestinationType;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -16,4 +14,7 @@ public class Destination {
     private String address ;
     private String country ;
     private String city ;
+    @Enumerated(value = EnumType.STRING )
+    private DestinationType destinationType ;
+
 }
