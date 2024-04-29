@@ -1,6 +1,6 @@
-package com.med.recommendationprofileservice.entity;
+package com.med.usersservices.model;
 
-import com.med.recommendationprofileservice.enums.*;
+import com.med.usersservices.enums.*;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

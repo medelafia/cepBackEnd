@@ -12,8 +12,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/clients/")
 public class ClientController {
-    @Autowired
     ClientServices clientServices ;
+    public ClientController(ClientServices clientServices ) {
+        this.clientServices = clientServices ;
+    }
     @GetMapping("/")
     public List<Client> getAllClients(){
         return clientServices.getAllClients() ;

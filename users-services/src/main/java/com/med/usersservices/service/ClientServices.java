@@ -1,6 +1,7 @@
 package com.med.usersservices.service;
 
 import com.med.usersservices.entity.Client;
+import com.med.usersservices.feignRepo.RecommendationProfileRepo;
 import com.med.usersservices.repository.ClientRepo;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import java.util.List;
 @Service
 public class ClientServices {
     ClientRepo clientRepo ;
+    RecommendationProfileRepo recommendationProfileRepo ;
     public ClientServices(ClientRepo clientRepo) {
         this.clientRepo = clientRepo ;
     }
@@ -18,6 +20,10 @@ public class ClientServices {
         return clientRepo.save(client);
     }
     public List<Client> getAllClients() {
-        return clientRepo.findAll() ;
+        List<Client> clients = clientRepo.findAll() ;
+        clients.forEach(client -> {
+            client.setRecommendationProfile(recommendationProfileRepo.getRecommendationProfileById(client.getRecommendationProfileId()));
+        });
+        return clients;
     }
 }

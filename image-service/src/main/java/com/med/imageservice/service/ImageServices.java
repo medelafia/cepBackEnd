@@ -18,7 +18,10 @@ public class ImageServices {
     public List<Image> getImagesById(List<Integer> ids){
         return imageRepo.findAllById(ids) ;
     }
-    public Image addImage(Image image) {
+    public Image addImage(String url) {
+        Image image = Image.builder()
+                .url(url)
+                .build();
         return imageRepo.save(image) ;
     }
 }
