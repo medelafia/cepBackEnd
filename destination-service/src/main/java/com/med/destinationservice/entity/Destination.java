@@ -16,5 +16,6 @@ public class Destination {
     private String city ;
     @Enumerated(value = EnumType.STRING )
     private DestinationType destinationType ;
+    private String destination ;
 
 }

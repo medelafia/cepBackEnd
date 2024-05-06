@@ -1,5 +1,6 @@
 package com.med.gateservice.web;
 
+import com.med.gateservice.dto.TrainStationDto;
 import com.med.gateservice.entity.TrainStation;
 import com.med.gateservice.service.TrainStationService;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ public class TrainStationController {
         return trainStationService.getTrainStationById(id);
     }
     @PostMapping("/")
-    public TrainStation addTrainStation(@RequestBody TrainStation trainStation) {
-        return trainStationService.addTrainStation(trainStation) ;
+    public TrainStation addTrainStation(@RequestBody TrainStationDto trainStationDto) {
+        return trainStationService.addTrainStation(trainStationDto) ;
     }
 }

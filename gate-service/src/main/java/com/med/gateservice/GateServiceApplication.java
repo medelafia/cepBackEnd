@@ -16,20 +16,4 @@ public class GateServiceApplication {
         SpringApplication.run(GateServiceApplication.class, args);
     }
 
-    //@Bean
-    CommandLineRunner commandLineRunner(AirportService airportService , TrainStationService trainStationService) {
-        return args -> {
-            airportService.addAirport(Airport.builder()
-                            .name("casa blanca")
-                            .airportType(AirportType.NATIONAL)
-                            .address("casa blanca")
-                            .country("morocco")
-                            .city("casa blanca")
-                            .emailContact("casaairport@gmail.com")
-                            .nbPhoneContact("028383838")
-                            .lat(29)
-                            .lng(28)
-                    .build()) ;
-        } ;
-    }
 }

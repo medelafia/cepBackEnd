@@ -1,6 +1,8 @@
 package com.med.gateservice.service;
 
+import com.med.gateservice.dto.AirportDto;
 import com.med.gateservice.entity.Airport;
+import com.med.gateservice.mapper.AirportMapper;
 import com.med.gateservice.repositry.AirportRepo;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +20,7 @@ public class AirportService {
     public List<Airport> getAllAirport() {
         return airportRepo.findAll() ;
     }
-    public Airport addAirport(Airport airport) {
-        return airportRepo.save(airport) ;
+    public Airport addAirport(AirportDto airportDto) {
+        return airportRepo.save(AirportMapper.toAirport(airportDto)) ;
     }
 }

@@ -1,6 +1,8 @@
 package com.med.gateservice.service;
 
+import com.med.gateservice.dto.TrainStationDto;
 import com.med.gateservice.entity.TrainStation;
+import com.med.gateservice.mapper.TrainStationMapper;
 import com.med.gateservice.repositry.TrainStationRepo;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +20,7 @@ public class TrainStationService {
     public List<TrainStation> getAllTrainStations() {
         return trainStationRepo.findAll() ;
     }
-    public TrainStation addTrainStation(TrainStation trainStation) {
-        return trainStationRepo.save(trainStation) ;
+    public TrainStation addTrainStation(TrainStationDto trainStationDto) {
+        return trainStationRepo.save(TrainStationMapper.toTrainStation(trainStationDto )) ;
     }
 }

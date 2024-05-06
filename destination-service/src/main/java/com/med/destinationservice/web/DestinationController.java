@@ -1,5 +1,6 @@
 package com.med.destinationservice.web;
 
+import com.med.destinationservice.dto.DestinationDto;
 import com.med.destinationservice.entity.Destination;
 import com.med.destinationservice.service.DestinationService;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class DestinationController {
         return destinationService.getAllDestinationsByCountry(country) ;
     }
     @PostMapping("/")
-    public Destination addNewDestination(Destination destination) {
-        return destinationService.addNewDestination(destination) ;
+    public Destination addNewDestination(DestinationDto destinationDto) {
+        return destinationService.addNewDestination(destinationDto) ;
     }
 }

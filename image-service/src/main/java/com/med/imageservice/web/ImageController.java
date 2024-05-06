@@ -6,7 +6,6 @@ import com.med.imageservice.entity.Image;
 import com.med.imageservice.service.ImageServices;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -31,6 +30,7 @@ public class ImageController {
         File fileUploaded = convertToFile(file) ;
         try {
             Map upload = cloudinary.uploader().upload(fileUploaded, ObjectUtils.emptyMap());
+            fileUploaded.delete() ;
             if(upload != null) {
                 return imageServices.addImage(upload.get("url").toString()) ;
             }

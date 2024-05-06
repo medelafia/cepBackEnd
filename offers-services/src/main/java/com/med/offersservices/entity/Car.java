@@ -25,4 +25,8 @@ public class Car extends Offer {
     @Transient
     private Image image ;
     private int carAgencyId ;
+    private int numberOfSeats ;
+    private int numberOfDoors ;
+    private int numberOfSuitcases ;
+    private boolean airConditioning ; 
 }
