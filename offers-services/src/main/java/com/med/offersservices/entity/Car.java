@@ -28,5 +28,5 @@ public class Car extends Offer {
     private int numberOfSeats ;
     private int numberOfDoors ;
     private int numberOfSuitcases ;
-    private boolean airConditioning ; 
+    private boolean airConditioning ;
 }

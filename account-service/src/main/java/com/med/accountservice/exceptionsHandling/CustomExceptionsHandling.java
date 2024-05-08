@@ -1,5 +1,6 @@
 package com.med.accountservice.exceptionsHandling;
 
+import com.med.accountservice.exceptions.ConflictException;
 import com.med.accountservice.exceptions.ExceptionDetails;
 import com.med.accountservice.exceptions.NoAccountException;
 import org.springframework.http.HttpStatus;
@@ -14,5 +15,10 @@ public class CustomExceptionsHandling {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public @ResponseBody ExceptionDetails noAccountExceptionHandler(NoAccountException accountException) {
         return new ExceptionDetails("no account found") ;
+    }
+    @ExceptionHandler(ConflictException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public @ResponseBody ExceptionDetails conflictAccountExceptionHandling(ConflictException conflictException) {
+        return new ExceptionDetails("account already exist") ;
     }
 }

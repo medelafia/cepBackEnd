@@ -2,6 +2,7 @@ package com.med.accountservice.entity;
 
 import com.med.accountservice.enums.AccountType;
 import com.med.accountservice.enums.ProviderType;
+import com.med.accountservice.model.Image;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -20,7 +21,4 @@ public class Account {
     private String tel ;
     @Enumerated(value = EnumType.STRING)
     private AccountType accountType ;
-    @Enumerated(value = EnumType.STRING)
-    private ProviderType providerType ;
-    private int userId ;
 }

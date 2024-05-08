@@ -1,6 +1,8 @@
 package com.med.accountservice.service;
 
+import com.med.accountservice.dto.AccountDto;
 import com.med.accountservice.entity.Account;
+import com.med.accountservice.exceptions.NoAccountException;
 import com.med.accountservice.model.LoginRequest;
 import com.med.accountservice.repository.AccountRepository;
 import org.springframework.stereotype.Service;
@@ -21,5 +23,10 @@ public class AccountService {
             }
         }
         return null ;
+    }
+    public Account register(AccountDto accountDto) {
+        Account account = accountRepository.findByUsername(accountDto.getUsername()).get() ;
+
+        return account ;
     }
 }
