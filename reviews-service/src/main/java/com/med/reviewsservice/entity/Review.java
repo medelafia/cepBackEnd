@@ -1,9 +1,7 @@
 package com.med.reviewsservice.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.med.reviewsservice.enums.ReviewFor;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Date;
@@ -17,4 +15,7 @@ public class Review {
     private String content ;
     private int score ;
     private Date date ;
+    @Enumerated(value = EnumType.STRING)
+    private ReviewFor reviewFor ;
+    private int providerId ;
 }
