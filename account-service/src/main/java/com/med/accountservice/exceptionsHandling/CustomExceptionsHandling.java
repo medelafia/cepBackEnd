@@ -1,9 +1,6 @@
 package com.med.accountservice.exceptionsHandling;
 
-import com.med.accountservice.exceptions.ConflictException;
-import com.med.accountservice.exceptions.ExceptionDetails;
-import com.med.accountservice.exceptions.NoElementException;
-import com.med.accountservice.exceptions.PasswordIncorrectException;
+import com.med.accountservice.exceptions.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -34,4 +31,6 @@ public class CustomExceptionsHandling {
     public @ResponseBody ExceptionDetails passwordIncorrectExceptionHandling(PasswordIncorrectException passwordIncorrectException) {
         return new ExceptionDetails(passwordIncorrectException.getMessage() , timestamp , HttpStatus.UNAUTHORIZED) ;
     }
+    //@ExceptionHandler(SessionEnd.class)
+    //@ResponseStatus(HttpStatus.)
 }

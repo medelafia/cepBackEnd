@@ -1,19 +1,18 @@
 package com.med.accountservice.usersManagement.entity;
 
 import com.med.accountservice.offersManagement.entity.Room;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.ManyToMany;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
 @Entity
-@AllArgsConstructor @NoArgsConstructor @Getter @Setter
-public class Hotel extends Provider {
+@AllArgsConstructor @NoArgsConstructor @Getter @Setter @SuperBuilder
+public class Hotel{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id ;
     private int nbStars ;
     private String address ;
     private String country ;

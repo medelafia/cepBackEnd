@@ -6,6 +6,9 @@ import com.med.accountservice.usersManagement.entity.Costumer;
 import com.med.accountservice.usersManagement.feignClient.RecommendationProfileRepo;
 import com.med.accountservice.usersManagement.repository.CustomerRepo;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,9 +26,11 @@ public class CostumerService {
         return costumer ;
     }
     public Costumer updateCostumer(Costumer costumer) {
+
         return customerRepo.save(costumer) ;
     }
-    public List<Costumer> getAllAccounts() {
+    public List<Costumer> getAllCostumers(int page) {
+        Page<Costumer> costumers = customerRepo.findAll(PageRequest.of(page , 9 )) ;
         return customerRepo.findAll() ;
     }
 

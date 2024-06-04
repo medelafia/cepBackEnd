@@ -10,20 +10,20 @@ import org.hibernate.internal.build.AllowNonPortable;
 
 import java.util.Date;
 
-@MappedSuperclass
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @AllArgsConstructor @NoArgsConstructor @SuperBuilder
 @Getter @Setter
 public class Reservation {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY )
     private int id ;
     private int nbPersons ;
-    private long price ;
+    private long totalPrice ;
     private boolean isPaid ;
     private Date reservationDate ;
-    @JsonIgnore
     private int clientId ;
-    @Transient
-    private Client client ;
+    private int offerId ;
     @Enumerated(value = EnumType.STRING)
     private ReservationStatus reservationStatus ;
 }

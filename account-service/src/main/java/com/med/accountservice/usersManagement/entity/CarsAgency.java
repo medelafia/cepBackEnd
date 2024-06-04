@@ -1,9 +1,7 @@
 package com.med.accountservice.usersManagement.entity;
 
 import com.med.accountservice.offersManagement.entity.Car;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +11,10 @@ import java.util.List;
 
 @Entity
 @AllArgsConstructor @Getter @Setter @NoArgsConstructor
-public class CarsAgency extends Provider {
+public class CarsAgency {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id ;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Car> cars ;
 }

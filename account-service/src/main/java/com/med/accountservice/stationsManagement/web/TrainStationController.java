@@ -3,10 +3,7 @@ package com.med.accountservice.stationsManagement.web;
 import com.med.accountservice.stationsManagement.entity.TrainStation;
 import com.med.accountservice.stationsManagement.service.TrainStationService;
 import lombok.Getter;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,7 +12,7 @@ import java.util.List;
 public class TrainStationController {
     private TrainStationService trainStationService ;
     @PostMapping("/")
-    public TrainStation addTrainTravel(TrainStation trainStation) {
+    public TrainStation addTrainTravel(@RequestBody TrainStation trainStation) {
         return trainStationService.addTrainStation(trainStation ) ;
     }
     @GetMapping("/")

@@ -2,12 +2,13 @@ package com.med.accountservice;
 
 import com.cloudinary.Cloudinary;
 import com.med.accountservice.enums.AccountType;
+import com.med.accountservice.enums.ProviderType;
 import com.med.accountservice.usersManagement.entity.Account;
 import com.med.accountservice.usersManagement.entity.Costumer;
-import com.med.accountservice.usersManagement.repository.AccountRepo;
-import com.med.accountservice.usersManagement.repository.AirlineRepo;
-import com.med.accountservice.usersManagement.repository.CustomerRepo;
-import com.med.accountservice.usersManagement.repository.RailwayOperatorRepo;
+import com.med.accountservice.usersManagement.entity.Hotel;
+import com.med.accountservice.usersManagement.repository.*;
+import com.med.accountservice.usersManagement.service.AccountService;
+import com.med.accountservice.usersManagement.service.HotelService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,7 +24,6 @@ import java.util.Map;
 
 @SpringBootApplication
 @EnableFeignClients
-@CrossOrigin("http://localhost:5173")
 public class AccountServiceApplication {
 
     public static void main(String[] args) {
@@ -44,28 +44,16 @@ public class AccountServiceApplication {
         return new BCryptPasswordEncoder();
     }
     @Bean
-    public CommandLineRunner start(AccountRepo accountRepo ,
-                                   CustomerRepo customerRepo ,
-                                   AirlineRepo airlineRepo ,
-                                   RailwayOperatorRepo railwayOperatorRepo) {
+    public CommandLineRunner start(AccountService accountService) {
         return ar->{
-            accountRepo.save(Account.builder()
-                            .tel("0658045721")
-                            .email("mohamedelafia016@gmail.com")
-                            .password("med@29072003")
+            accountService.register(Account.builder()
+                            .accountType(AccountType.COSTUMER)
                             .username("mohamed")
+                            .password("med@29072003")
+                            .email("mohamedelafia723@gmail.com")
+                            .tel("0658045721")
                     .build()) ;
-            customerRepo.save(Costumer.builder()
-                        .tel("0658045721")
-                        .email("mohamedelafia016@gmail.com")
-                        .password("med@29072003")
-                        .username("mohamed")
-                            .firstName("mohamed")
-                            .lastName("elafia")
-                            .gender("m")
-                            .age(20)
-                    .build()) ;
-        } ;
+        };
     }
     @Bean
     Timestamp timestamp() {

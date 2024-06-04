@@ -1,9 +1,7 @@
 package com.med.accountservice.usersManagement.entity;
 
 import com.med.accountservice.offersManagement.entity.TrainTravel;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +14,10 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class RailwayOperator extends Provider {
+public class RailwayOperator{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id ;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<TrainTravel> travelList ;
 }

@@ -2,9 +2,7 @@ package com.med.reviewsservice.web;
 
 import com.med.reviewsservice.entity.Review;
 import com.med.reviewsservice.service.ReviewService;
-import lombok.Getter;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -22,5 +20,4 @@ public class ReviewController {
     public void deleteReviewById(@PathVariable int id) {
         deleteReviewById(id);
     }
-
 }

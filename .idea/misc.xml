@@ -18,6 +18,7 @@
         <option value="$PROJECT_DIR$/reviews-service/pom.xml" />
         <option value="$PROJECT_DIR$/cloud-service/pom.xml" />
         <option value="$PROJECT_DIR$/mailing-service/pom.xml" />
+        <option value="$PROJECT_DIR$/other-services/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

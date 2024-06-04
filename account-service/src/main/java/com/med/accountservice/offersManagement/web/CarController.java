@@ -11,12 +11,24 @@ import java.util.List;
 public class CarController {
     private CarService carService ;
     private BasicService<Car , Integer> basicService ;
-    public CarController(CarService carService ) {
+    public CarController(CarService carService , BasicService basicService) {
         this.carService = carService ;
+        this.basicService = basicService ;
     }
     @GetMapping("/")
     public List<Car> findAllCars() {
         return basicService.findAll() ;
     }
-
+    @PostMapping("/")
+    public Car addCar(@RequestBody Car car){
+        return basicService.save(car) ;
+    }
+    @PostMapping("/setAvailable")
+    public Car setAvailable(@RequestParam int id){
+        return carService.setAvailable(id) ;
+    }
+    @GetMapping("/{id}")
+    public boolean checkAvailable(@PathVariable int id) {
+        return carService.checkAvailable(id) ;
+    }
 }

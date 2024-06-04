@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController @AllArgsConstructor
 @RequestMapping("/costumers")
+@CrossOrigin("http://localhost:5173")
 public class CostumerController {
     private CostumerService costumerService ;
     @GetMapping("/{id}")
@@ -20,7 +21,8 @@ public class CostumerController {
         return costumerService.updateCostumer(costumer) ;
     }
     @GetMapping("/")
-    private List<Costumer> getAllCostumers() {
-        return costumerService.getAllAccounts() ;
+    private List<Costumer> getAllCostumers(@RequestParam int page)
+    {
+        return costumerService.getAllCostumers(page) ;
     }
 }

@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-
 @Inheritance
 @Entity
 @Getter @Setter
@@ -23,4 +22,8 @@ public class Account {
     private String password ;
     private String email ;
     private String tel ;
+    @Enumerated(value = EnumType.STRING)
+    private AccountType accountType ;
+    private boolean emailVerified ;
+    private boolean phoneNumberVerified ;
 }

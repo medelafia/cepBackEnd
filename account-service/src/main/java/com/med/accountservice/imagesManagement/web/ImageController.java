@@ -2,10 +2,7 @@ package com.med.accountservice.imagesManagement.web;
 
 import com.med.accountservice.imagesManagement.entity.Image;
 import com.med.accountservice.imagesManagement.service.ImageService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -18,8 +15,10 @@ public class ImageController {
         this.imageService = imageService ;
     }
 
-    public Image upload(MultipartFile multipartFile) {
-        return imageService.updloadImage(multipartFile) ;
+
+    @PostMapping("/")
+    public Image upload(MultipartFile file) {
+        return imageService.updloadImage(file) ;
     }
     @GetMapping("/{id}")
     public Image getImageById(@PathVariable int id) {

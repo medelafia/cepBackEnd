@@ -3,6 +3,7 @@ package com.med.reviewsservice.service;
 
 import com.med.reviewsservice.entity.Review;
 import com.med.reviewsservice.repository.ReviewRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,5 +20,10 @@ public class ReviewService {
     public void deleteReviewById(int id) {
         reviewRepository.deleteById(id);
     }
-
+    public float getProviderScore(int id) {
+        return reviewRepository.getScoreAverage(id) ;
+    }
+    public int getProviderReviewsCount(int id) {
+        return reviewRepository.getReviewsCountsByProviderId(id) ;
+    }
 }
