@@ -5,13 +5,15 @@ import com.med.accountservice.imagesManagement.entity.Image;
 import com.med.accountservice.offersManagement.entity.Destination;
 import com.med.accountservice.offersManagement.service.DestinationService;
 import lombok.AllArgsConstructor;
-import org.hibernate.bytecode.internal.bytebuddy.PassThroughInterceptor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/destinations")
 @AllArgsConstructor
+@CrossOrigin("http://localhost:5173")
 public class DestinationController {
     private DestinationService destinationService ;
     @GetMapping("/{id}")
@@ -19,7 +21,7 @@ public class DestinationController {
         return destinationService.getDestinationById(id);
     }
     @PostMapping("/")
-    public Destination addDestination(Destination destination){
+    public Destination addDestination(@RequestBody Destination destination){
         return destinationService.addDestination(destination) ;
     }
     @PostMapping("/{id}")
@@ -29,5 +31,9 @@ public class DestinationController {
     @PostMapping("/addImage")
     public Image addImageToDestination(MultipartFile multipartFile , int id) {
         return destinationService.addImageToDestination(multipartFile , id) ;
+    }
+    @GetMapping("/")
+    public List<Destination> getAllDestination() {
+        return destinationService.getAllDestinations() ;
     }
 }

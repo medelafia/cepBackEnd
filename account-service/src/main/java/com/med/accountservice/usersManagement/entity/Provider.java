@@ -9,34 +9,37 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-@MappedSuperclass
+import java.util.List;
+
+@Entity
 @AllArgsConstructor @NoArgsConstructor @Getter @Setter
 @SuperBuilder
 public class Provider extends Account {
     private String CompanyName ;
     private String country ;
+    private String webSiteUrl ;
     @Enumerated(value = EnumType.STRING)
     private ProviderType providerType ;
     @OneToOne
     private Image logo ;
-    private int accountId ;
     @Transient
     private int nbReviews ;
     @Transient
     private float score ;
-    @Transient
-    @OneToOne
-    private Hotel hotel ;
-    @OneToOne
-    @Transient
-    private CarsAgency carsAgency ;
-    @Transient
-    @OneToOne
-    private RailwayOperator railwayOperator ;
-    @OneToOne
-    @Transient
-    private TravelAgency travelAgency ;
-    @Transient
-    @OneToOne
-    private Airline airline;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Image> images ;
+    @Override
+    public Account login(String username, String password) {
+        return null;
+    }
+
+    @Override
+    public Account register(Account account) {
+        return null;
+    }
+    public Provider changeLogo(Image newLogo) {
+        this.logo = newLogo  ;
+        return this ;
+    }
+
 }

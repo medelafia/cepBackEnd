@@ -15,7 +15,6 @@ public class Review {
     private String content ;
     private int score ;
     private Date date ;
-    @Enumerated(value = EnumType.STRING)
-    private ReviewFor reviewFor ;
+    private String title ;
     private int providerId ;
 }

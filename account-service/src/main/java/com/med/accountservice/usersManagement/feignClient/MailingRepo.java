@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @FeignClient(value = "mailing-service" , url = "http://localhost:8081/")
 public interface MailingRepo {
-    @PostMapping("/")
+    @PostMapping("/sendSimpleEmail")
     public void sendMail(@RequestBody SimpleEmailDetails simpleEmailDetails) ;
 }

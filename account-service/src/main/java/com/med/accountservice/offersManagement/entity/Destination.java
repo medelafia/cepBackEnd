@@ -14,7 +14,6 @@ public class Destination {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id ;
     private String name ;
-    private String address ;
     private String country ;
     private String city ;
     @Enumerated(value = EnumType.STRING )

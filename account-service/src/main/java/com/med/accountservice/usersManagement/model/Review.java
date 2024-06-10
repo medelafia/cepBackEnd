@@ -14,8 +14,8 @@ import java.sql.Date;
 public class Review {
         private int id ;
         private String content ;
+        private String title ;
         private int score ;
         private Date date ;
-        private ReviewFor reviewFor ;
         private int providerId ;
 }

@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @Service
 public class DestinationService {
     private DestinationRepo destinationRepo ;
@@ -40,5 +42,8 @@ public class DestinationService {
         }) ;
         destination.getImages().add(image) ;
         return image ;
+    }
+    public List<Destination> getAllDestinations() {
+        return destinationRepo.findAll() ;
     }
 }

@@ -10,6 +10,11 @@ import java.util.List;
 
 @FeignClient(value = "reviews-service" , url = "http://localhost:8090")
 public interface ReviewsRepo {
-    @GetMapping("/{id}")
+    @GetMapping("/reviews/{id}")
     public List<Review> getAllReviewsByProviderId(@PathVariable int id) ;
+    @GetMapping("/reviews/scoreAvg/{id}")
+    public float getScoreAvg(@PathVariable int id) ;
+    @GetMapping("/reviews/count/{id}")
+    public int getReviewsCount(@PathVariable int id) ;
+
 }

@@ -1,28 +1,33 @@
 package com.med.accountservice.usersManagement.web;
 
+import com.med.accountservice.usersManagement.dto.CostumerUpdateRequest;
 import com.med.accountservice.usersManagement.entity.Costumer;
-import com.med.accountservice.usersManagement.service.CostumerService;
-import lombok.AllArgsConstructor;
+import com.med.accountservice.usersManagement.service.AccountService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController @AllArgsConstructor
-@RequestMapping("/costumers")
-@CrossOrigin("http://localhost:5173")
+@RestController
+@RequestMapping("/costumer")
 public class CostumerController {
-    private CostumerService costumerService ;
-    @GetMapping("/{id}")
-    public Costumer getCostumerById(@PathVariable int id) {
-        return costumerService.getCostumerById(id) ;
-    }
-    @PostMapping("/update/")
-    public Costumer updateCostumer(Costumer costumer) {
-        return costumerService.updateCostumer(costumer) ;
-    }
+    @Autowired
+    private AccountService accountService ;
     @GetMapping("/")
-    private List<Costumer> getAllCostumers(@RequestParam int page)
-    {
-        return costumerService.getAllCostumers(page) ;
+    public List<Costumer> getALLCostumers() {
+        return accountService.getAllCostumers() ;
     }
+    @PostMapping("/update/{id}")
+    public Costumer updateInfo(@PathVariable int id , @RequestBody CostumerUpdateRequest costumer) {
+        return accountService.updateInfo(id , costumer) ;
+    }
+    @PostMapping("/disableRecommendation/{id}")
+    public void disableRecommendation(@PathVariable int id) {
+        accountService.setRecommendationActivation(id , false); ;
+    }
+    @PostMapping("/enableRecommendation/{id}")
+    public void enableRecommendation(@PathVariable int id) {
+        accountService.setRecommendationActivation(id , true); ;
+    }
+
 }

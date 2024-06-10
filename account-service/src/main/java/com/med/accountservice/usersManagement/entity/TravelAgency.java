@@ -14,10 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class TravelAgency {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY )
-    private int id ;
+public class TravelAgency extends Provider{
     @ManyToMany(fetch = FetchType.EAGER)
     private List<OrganizedTravel> travels ;
 }

@@ -18,6 +18,18 @@ public class ReviewController {
     }
     @PostMapping("/{id}")
     public void deleteReviewById(@PathVariable int id) {
-        deleteReviewById(id);
+        reviewService.deleteReviewById(id);
+    }
+    @PostMapping("/")
+    public Review writeReview(@RequestBody Review review) {
+        return reviewService.writeReview(review) ;
+    }
+    @GetMapping("/scoreAvg/{id}")
+    public float getReviewsAvgForProvider(@PathVariable int id) {
+        return reviewService.getProviderScore(id);
+    }
+    @GetMapping("/count/{id}")
+    public int getReviewsCountForProvider(@PathVariable  int id ) {
+        return reviewService.getProviderReviewsCount(id);
     }
 }

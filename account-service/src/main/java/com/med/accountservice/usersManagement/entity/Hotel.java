@@ -9,10 +9,7 @@ import java.util.List;
 
 @Entity
 @AllArgsConstructor @NoArgsConstructor @Getter @Setter @SuperBuilder
-public class Hotel{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id ;
+public class Hotel extends Provider{
     private int nbStars ;
     private String address ;
     private String country ;

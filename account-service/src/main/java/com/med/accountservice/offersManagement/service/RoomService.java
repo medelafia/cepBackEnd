@@ -14,7 +14,11 @@ public class RoomService {
         this.roomRepo = roomRepo ;
     }
     public List<Room> findAllAvailableRooms(int id) {
-        return roomRepo.findAllByAvailableAAndHotelId(id) ;
+        List<Room> rooms = roomRepo.findAllByHotelId(id) ;
+        rooms.stream().filter(room->{
+            return room.isAvailable() ;
+        }).toList();
+        return rooms ;
     }
     public Room setAvailable(int id) {
         Room room = roomRepo.findById(id).orElseThrow(()->{

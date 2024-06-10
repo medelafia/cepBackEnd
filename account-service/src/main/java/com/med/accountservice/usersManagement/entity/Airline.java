@@ -15,10 +15,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Airline {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY )
-    private int id ;
+public class Airline extends Provider {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Flight> flights ;
 }

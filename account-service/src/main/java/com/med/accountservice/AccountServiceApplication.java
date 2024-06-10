@@ -2,13 +2,12 @@ package com.med.accountservice;
 
 import com.cloudinary.Cloudinary;
 import com.med.accountservice.enums.AccountType;
+import com.med.accountservice.enums.DestinationType;
 import com.med.accountservice.enums.ProviderType;
-import com.med.accountservice.usersManagement.entity.Account;
-import com.med.accountservice.usersManagement.entity.Costumer;
-import com.med.accountservice.usersManagement.entity.Hotel;
-import com.med.accountservice.usersManagement.repository.*;
-import com.med.accountservice.usersManagement.service.AccountService;
-import com.med.accountservice.usersManagement.service.HotelService;
+import com.med.accountservice.offersManagement.entity.Destination;
+import com.med.accountservice.offersManagement.repository.DestinationRepo;
+import io.jsonwebtoken.JwtBuilder;
+import io.jsonwebtoken.impl.DefaultJwtBuilder;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,8 +15,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,20 +40,45 @@ public class AccountServiceApplication {
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    @Bean
-    public CommandLineRunner start(AccountService accountService) {
-        return ar->{
-            accountService.register(Account.builder()
-                            .accountType(AccountType.COSTUMER)
-                            .username("mohamed")
-                            .password("med@29072003")
-                            .email("mohamedelafia723@gmail.com")
-                            .tel("0658045721")
+    //@Bean
+    public CommandLineRunner start(DestinationRepo destinationRepo ) {
+        return ar -> {
+            destinationRepo.save(Destination.builder()
+                            .name("lota hammam")
+                            .country("maroc")
+                            .description("this amazing city")
+                            .destinationType(DestinationType.CULTURAL_AREAS)
+                            .city("chefchouen")
+                    .build()) ;
+            destinationRepo.save(Destination.builder()
+                    .name("tallasmtan")
+                    .country("maroc")
+                    .description("this amazing city")
+                    .destinationType(DestinationType.CULTURAL_AREAS)
+                    .city("chefchouen")
+                    .build()) ;
+            destinationRepo.save(Destination.builder()
+                    .name("lota hammam")
+                    .country("maroc")
+                    .description("this amazing city")
+                    .destinationType(DestinationType.CULTURAL_AREAS)
+                    .city("chefchouen")
+                    .build()) ;
+            destinationRepo.save(Destination.builder()
+                    .name("tallasmtan")
+                    .country("maroc")
+                    .description("this amazing city")
+                    .destinationType(DestinationType.CULTURAL_AREAS)
+                    .city("chefchouen")
                     .build()) ;
         };
     }
     @Bean
     Timestamp timestamp() {
         return new Timestamp(System.currentTimeMillis()) ;
+    }
+    @Bean
+    JwtBuilder jwtBuilder(){
+        return new DefaultJwtBuilder() ;
     }
 }

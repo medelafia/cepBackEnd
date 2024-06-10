@@ -6,6 +6,8 @@ import com.med.reviewsservice.repository.ReviewRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -25,5 +27,9 @@ public class ReviewService {
     }
     public int getProviderReviewsCount(int id) {
         return reviewRepository.getReviewsCountsByProviderId(id) ;
+    }
+    public Review writeReview(Review review) {
+        review.setDate(Date.valueOf(LocalDate.now()));
+        return reviewRepository.save(review) ;
     }
 }

@@ -11,10 +11,7 @@ import java.util.List;
 
 @Entity
 @AllArgsConstructor @Getter @Setter @NoArgsConstructor
-public class CarsAgency {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id ;
+public class CarsAgency extends Provider{
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Car> cars ;
 }

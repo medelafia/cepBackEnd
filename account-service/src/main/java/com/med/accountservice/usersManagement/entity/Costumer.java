@@ -28,4 +28,27 @@ public class Costumer extends Account {
     private RecommendationProfile recommendationProfile ;
     @OneToOne
     private Image profileImage ;
+
+    @Override
+    public Account login(String username, String password) {
+        return null;
+    }
+
+    @Override
+    public Account register(Account account) {
+        return null;
+    }
+    public void activateRecommendation() {
+        this.setRecommendationProfileActivation(true);
+    }
+    public void stopRecommendation(){
+        this.setRecommendationProfileActivation(false);
+    }
+    public Costumer updateInfo(Costumer costumer) {
+        this.age = costumer.getAge()  ;
+        this.firstName = costumer.getFirstName() ;
+        this.lastName = costumer.getLastName() ;
+        this.gender = costumer.getGender() ;
+        return this ;
+    }
 }

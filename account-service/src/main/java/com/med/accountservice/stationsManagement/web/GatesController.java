@@ -1,22 +1,43 @@
 package com.med.accountservice.stationsManagement.web;
 
+import com.med.accountservice.stationsManagement.entity.Airport;
 import com.med.accountservice.stationsManagement.entity.Gate;
+import com.med.accountservice.stationsManagement.entity.TrainStation;
 import com.med.accountservice.stationsManagement.service.GateService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.med.accountservice.stationsManagement.service.TrainStationService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/gates")
+@CrossOrigin("http://localhost:5173")
 public class GatesController {
+    @Autowired
     private GateService gateService ;
-    public GatesController(GateService gateService) {
-        this.gateService = gateService ;
-    }
     @GetMapping("/")
     public List<Gate> getAllGates() {
         return gateService.getAllGates() ;
+    }
+    @PostMapping("/trainStations/")
+    public Gate addTrainTravel(@RequestBody TrainStation trainStation) {
+        return gateService.addGate(trainStation) ;
+    }
+    @PostMapping("/airports/")
+    public Gate addAirport(@RequestBody  Airport airport) {
+        return gateService.addGate(airport);
+    }
+    @GetMapping("/airports/")
+    public List<Airport> getAllAirports() {
+        return gateService.getAllAirports() ;
+    }
+    @GetMapping("/trainStations/")
+    public List<TrainStation> getAllTrainStations(){
+        return gateService.getAllTrainStations() ;
+    }
+    @PostMapping("/{id}")
+    public void deleteGate(@PathVariable int id) {
+        gateService.deleteGate(id);
     }
 }
