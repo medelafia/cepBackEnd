@@ -5,6 +5,8 @@ import org.apache.catalina.LifecycleState;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -16,5 +18,6 @@ public interface ReviewsRepo {
     public float getScoreAvg(@PathVariable int id) ;
     @GetMapping("/reviews/count/{id}")
     public int getReviewsCount(@PathVariable int id) ;
-
+    @PostMapping("/reviews/")
+    public Review writeReview(@RequestBody Review review)  ;
 }

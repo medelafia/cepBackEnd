@@ -10,7 +10,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @Entity
-@AllArgsConstructor @NoArgsConstructor
+ @NoArgsConstructor
 @SuperBuilder @Getter @Setter
 public class FlightReservation extends TravelReservation{
 

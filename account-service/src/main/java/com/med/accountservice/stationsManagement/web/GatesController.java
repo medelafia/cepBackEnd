@@ -37,7 +37,7 @@ public class GatesController {
         return gateService.getAllTrainStations() ;
     }
     @PostMapping("/{id}")
-    public void deleteGate(@PathVariable int id) {
+    public void deleteGate(@PathVariable String id) {
         gateService.deleteGate(id);
     }
 }

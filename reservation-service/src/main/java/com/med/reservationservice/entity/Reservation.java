@@ -26,4 +26,5 @@ public class Reservation {
     private int offerId ;
     @Enumerated(value = EnumType.STRING)
     private ReservationStatus reservationStatus ;
+    private String paymentLink ;
 }

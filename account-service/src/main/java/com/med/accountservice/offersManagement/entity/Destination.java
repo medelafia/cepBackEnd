@@ -21,4 +21,8 @@ public class Destination {
     private String description ;
     @OneToMany
     private List<Image> images ;
+    public List<Image> addImage(Image image) {
+        this.getImages().add(image );
+        return this.getImages() ;
+    }
 }

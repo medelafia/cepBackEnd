@@ -1,6 +1,7 @@
 package com.med.reservationservice.entity;
 
 
+import com.med.reservationservice.enums.SeatType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
@@ -15,8 +16,8 @@ import java.util.Date;
 @MappedSuperclass
 @AllArgsConstructor @NoArgsConstructor @Getter @Setter @SuperBuilder
 public class TravelReservation extends Reservation{
-    private String travelClass ;
     private int numPlace;
     private Date travelDate ;
     private Time travelTime ;
+    private SeatType seatType ;
 }

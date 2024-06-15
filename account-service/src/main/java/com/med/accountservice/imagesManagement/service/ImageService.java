@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -59,5 +60,12 @@ public class ImageService {
                 .url(url)
                 .build();
         return imageRepo.save(image) ;
+    }
+    public List<Image> uploadImages(MultipartFile[] files) {
+        List<Image> images = new ArrayList<>() ;
+        for(MultipartFile file : files) {
+            images.add(updloadImage(file)) ;
+        }
+        return images ;
     }
 }

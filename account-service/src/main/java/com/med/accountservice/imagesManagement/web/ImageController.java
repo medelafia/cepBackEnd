@@ -14,8 +14,6 @@ public class ImageController {
     public ImageController(ImageService imageService) {
         this.imageService = imageService ;
     }
-
-
     @PostMapping("/")
     public Image upload(MultipartFile file) {
         return imageService.updloadImage(file) ;
@@ -28,4 +26,9 @@ public class ImageController {
     public List<Image> getAllImagesByIds(List<Integer> ids) {
         return imageService.findImagesByIds(ids) ;
     }
+    @PostMapping("/multiple/")
+    public List<Image> uploadMultipleImages(MultipartFile[] files) {
+        return  imageService.uploadImages(files);
+    }
+
 }

@@ -18,4 +18,5 @@ public class Review {
         private int score ;
         private Date date ;
         private int providerId ;
+        private int clientId ;
 }

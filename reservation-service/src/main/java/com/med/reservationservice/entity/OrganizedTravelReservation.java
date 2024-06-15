@@ -7,8 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-@Entity
-@AllArgsConstructor @NoArgsConstructor @Getter @Setter @SuperBuilder
+@Entity @NoArgsConstructor @Getter @Setter @SuperBuilder
 public class OrganizedTravelReservation extends TravelReservation {
 
 }

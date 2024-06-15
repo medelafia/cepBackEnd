@@ -34,7 +34,7 @@ public class GateService {
     public List<TrainStation> getAllTrainStations() {
         return trainStationRepo.findAll() ;
     }
-    public void deleteGate(int id) {
+    public void deleteGate(String id) {
         gateRepo.deleteById(id) ;
     }
 }

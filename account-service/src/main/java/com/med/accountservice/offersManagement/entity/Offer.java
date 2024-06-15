@@ -9,11 +9,10 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @MappedSuperclass
-@AllArgsConstructor @NoArgsConstructor  @SuperBuilder @Getter @Setter
+@AllArgsConstructor @NoArgsConstructor @Getter @Setter @SuperBuilder
 public class Offer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id ;
     private float price ;
-    private boolean isAvailable ;
 }

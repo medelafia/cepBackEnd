@@ -1,9 +1,6 @@
 package com.med.reservationservice.entity;
 
-import com.med.reservationservice.enums.DaysReservationType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

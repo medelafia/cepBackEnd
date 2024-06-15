@@ -43,34 +43,7 @@ public class AccountServiceApplication {
     //@Bean
     public CommandLineRunner start(DestinationRepo destinationRepo ) {
         return ar -> {
-            destinationRepo.save(Destination.builder()
-                            .name("lota hammam")
-                            .country("maroc")
-                            .description("this amazing city")
-                            .destinationType(DestinationType.CULTURAL_AREAS)
-                            .city("chefchouen")
-                    .build()) ;
-            destinationRepo.save(Destination.builder()
-                    .name("tallasmtan")
-                    .country("maroc")
-                    .description("this amazing city")
-                    .destinationType(DestinationType.CULTURAL_AREAS)
-                    .city("chefchouen")
-                    .build()) ;
-            destinationRepo.save(Destination.builder()
-                    .name("lota hammam")
-                    .country("maroc")
-                    .description("this amazing city")
-                    .destinationType(DestinationType.CULTURAL_AREAS)
-                    .city("chefchouen")
-                    .build()) ;
-            destinationRepo.save(Destination.builder()
-                    .name("tallasmtan")
-                    .country("maroc")
-                    .description("this amazing city")
-                    .destinationType(DestinationType.CULTURAL_AREAS)
-                    .city("chefchouen")
-                    .build()) ;
+
         };
     }
     @Bean

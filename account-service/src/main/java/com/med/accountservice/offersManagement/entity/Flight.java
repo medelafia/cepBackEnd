@@ -16,12 +16,10 @@ import java.util.List;
 @Entity @AllArgsConstructor @NoArgsConstructor @SuperBuilder @Getter @Setter
 public class Flight extends Travel{
     private int airlineId ;
-    @Enumerated(value = EnumType.STRING )
-    private FlightClass flightClass ;
     @ManyToOne
-    private Airport startAirport ;
-    @OneToOne
-    private Airport arrivedAirport ;
+    private Airport from ;
+    @ManyToOne
+    private Airport to ;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Airport> passedAirports ;
     private FlightType flightType ;

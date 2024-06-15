@@ -4,12 +4,7 @@ import com.med.accountservice.usersManagement.dto.CostumerUpdateRequest;
 import com.med.accountservice.usersManagement.dto.LoginRequest;
 import com.med.accountservice.usersManagement.dto.PasswordRequest;
 import com.med.accountservice.usersManagement.entity.Account;
-import com.med.accountservice.usersManagement.entity.Costumer;
-import com.med.accountservice.usersManagement.entity.Provider;
 import com.med.accountservice.usersManagement.service.AccountService;
-import com.med.accountservice.usersManagement.service.SessionService;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -20,14 +15,6 @@ import java.util.List;
 public class AccountController {
     @Autowired
     private AccountService accountService ;
-    @PostMapping("/register/costumer/")
-    public Costumer registreCostumer(@RequestBody Costumer costumer){
-        return accountService.register(costumer);
-    }
-    @PostMapping("/register/provider/")
-    public Provider registerProvider(@RequestBody Provider provider) {
-        return accountService.register(provider) ;
-    }
     @PostMapping("/login")
     public Account login(@RequestBody LoginRequest loginRequest) {
         return accountService.login(loginRequest) ;
@@ -47,5 +34,13 @@ public class AccountController {
     @PostMapping("/changePassword")
     public void changePassword(@RequestBody PasswordRequest passwordRequest) {
         accountService.changePassword(passwordRequest);
+    }
+    @GetMapping("/requestVerifierEmail")
+    public void requestVerifierEmail(@RequestParam int id) {
+        accountService.sendVerificationEmailLink(id);
+    }
+    @GetMapping("/verifierEmail")
+    public void verifierEmail(@RequestParam int id , @RequestParam String emailEncoded ) {
+        accountService.verifierEmail(id , emailEncoded);
     }
 }

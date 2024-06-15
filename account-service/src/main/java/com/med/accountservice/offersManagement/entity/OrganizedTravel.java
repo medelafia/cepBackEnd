@@ -14,9 +14,13 @@ import java.util.List;
 @Entity @NoArgsConstructor @AllArgsConstructor @SuperBuilder
 @Getter @Setter
 public class OrganizedTravel extends Travel {
+    @ManyToOne
+    private TravelAgency travelAgency ;
     private int nbDays ;
     private String country ;
     private String city ;
+    private boolean includeTrans ;
+    private boolean includeHotel ;
     @ManyToOne
     private Airport startAirport ;
     @ManyToMany(fetch = FetchType.EAGER)

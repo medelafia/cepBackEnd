@@ -13,8 +13,8 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor @NoArgsConstructor @SuperBuilder
 @Getter @Setter
 public class Gate {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id ;
+    @Id
+    private String id ;
     private String name ;
     private String address ;
     private String city ;

@@ -41,5 +41,8 @@ public class Provider extends Account {
         this.logo = newLogo  ;
         return this ;
     }
-
+    public Provider addImage(Image image) {
+        this.getImages().add(image) ;
+        return this ;
+    }
 }

@@ -2,6 +2,7 @@ package com.med.accountservice.offersManagement.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.med.accountservice.stationsManagement.entity.TrainStation;
+import com.med.accountservice.usersManagement.entity.RailwayOperator;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,11 +16,12 @@ import java.util.List;
 @Getter @Setter
 @NoArgsConstructor
 public class TrainTravel extends Travel {
-    private int railWaysOperatorId ;
     @ManyToOne
-    TrainStation startTrainStation ;
+    RailwayOperator railwayOperator ;
+    @ManyToOne
+    TrainStation from ;
     @OneToOne
-    TrainStation arrivalTrainStation ;
+    TrainStation to ;
     @ManyToMany(fetch = FetchType.EAGER)
     List<TrainStation> passedTrainStations ;
 }

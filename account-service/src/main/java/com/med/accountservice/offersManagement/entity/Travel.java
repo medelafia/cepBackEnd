@@ -1,6 +1,6 @@
 package com.med.accountservice.offersManagement.entity;
 
-import com.med.accountservice.enums.FlightType;
+
 import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,9 +18,25 @@ import java.sql.Time;
 @SuperBuilder
 public class Travel extends Offer {
     private int distance ;
-    private Date date ;
+    private Date departDate ;
+    private Date returnDate ;
     private Time startTime ;
     private Time endTime ;
     private int nbOfPlaces ;
     private int nbOfStops ;
+    private int reservedPlaces ;
+    public int incrementReservedPlaces(int count) {
+        if(getReservedPlaces() + count > getNbOfPlaces()) {
+            this.setReservedPlaces(this.getReservedPlaces() + count) ;
+            return nbOfPlaces ;
+        }
+        return -1 ;
+    }
+    public int decrementReservedPlaces(int count) {
+        if(this.getReservedPlaces() - count < 0 ) {
+            this.setReservedPlaces(this.getReservedPlaces() - count) ;
+            return nbOfPlaces ;
+        }
+        return -1 ;
+    }
 }

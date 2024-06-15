@@ -17,4 +17,5 @@ public class Review {
     private Date date ;
     private String title ;
     private int providerId ;
+    private int clientId ;
 }

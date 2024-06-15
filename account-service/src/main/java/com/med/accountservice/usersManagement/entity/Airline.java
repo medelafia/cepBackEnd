@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @AllArgsConstructor
@@ -16,6 +17,16 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class Airline extends Provider {
-    @ManyToMany(fetch = FetchType.EAGER)
+    @OneToMany
     private List<Flight> flights ;
+    public List<Flight> createNewFlight(Flight flight) {
+        this.flights.add(flight) ;
+        return flights ;
+    }
+    public List<Flight> deleteFlightById(int id) {
+        this.flights.stream().filter((flight)->{
+            return flight.getId() != id ;
+        }).collect(Collectors.toList()) ;
+        return flights ;
+    }
 }

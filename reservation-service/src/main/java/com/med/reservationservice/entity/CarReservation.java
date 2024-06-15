@@ -8,6 +8,6 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @Entity
-@AllArgsConstructor @NoArgsConstructor @Getter @Setter @SuperBuilder
+@Getter @Setter @SuperBuilder   @NoArgsConstructor
 public class CarReservation extends DaysReservation {
 }

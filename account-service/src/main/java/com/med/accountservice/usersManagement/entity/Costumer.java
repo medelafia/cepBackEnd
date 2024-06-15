@@ -51,4 +51,8 @@ public class Costumer extends Account {
         this.gender = costumer.getGender() ;
         return this ;
     }
+    public Image changeProfileImage(Image image) {
+        this.setProfileImage(image) ;
+        return this.profileImage ;
+    }
 }

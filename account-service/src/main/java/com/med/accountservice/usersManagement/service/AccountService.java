@@ -51,14 +51,6 @@ public class AccountService {
     private ResetPasswordSessionRepository resetPasswordSessionRepository ;
     @Autowired
     private MailingRepo mailingRepo ;
-    public Costumer register(Costumer costumer) {
-        costumer.setPassword(passwordEncoder.encode(costumer.getPassword()));
-        return costumerRepo.save(costumer) ;
-    }
-    public Provider register(Provider provider) {
-        provider.setPassword(passwordEncoder.encode(provider.getPassword()));
-        return providerRepo.save(provider) ;
-    }
     public Account login(LoginRequest loginRequest){
         Account account = accountRepo.findByUsername(loginRequest.getUsername()).orElseThrow(()->{
             throw new NoElementException("account not found") ;
@@ -124,25 +116,27 @@ public class AccountService {
             }
         }
     }
-    public Costumer updateInfo(int userId , CostumerUpdateRequest costumerUpdateRequest) {
-        Costumer costumer = costumerRepo.findById(userId).orElseThrow(()->{
-            throw new NoElementException("the account not found") ;
+    public void sendVerificationEmailLink(int accountId) {
+        Account account = accountRepo.findById(accountId).orElseThrow(()->{
+            throw new NoElementException("the account not exist") ;
         }) ;
-        if( costumer != null ){
-            costumer.setAge(costumerUpdateRequest.getAge());
-            costumer.setGender(costumerUpdateRequest.getGender());
-            costumer.setFirstName(costumerUpdateRequest.getFirstName());
-            costumer.setLastName(costumerUpdateRequest.getLastName());
-            return costumerRepo.save(costumer) ;
+        mailingRepo.sendMail(new SimpleEmailDetails(account.getEmail() ,
+                "verifier email" ,
+                "to verifier your email please subscribe this link : http://localhost:8089/accounts/verifierEmail?emailEncoded="+passwordEncoder.encode(account.getEmail())+"&userId="+accountId)) ;
+    }
+    public void verifierEmail(int accountId , String emailEncoded) {
+        Account account = accountRepo.findById(accountId).orElseThrow(()->{
+            throw new NoElementException("account not found");
+        }) ;
+        if(account != null ) {
+            if(passwordEncoder.matches(account.getEmail() , emailEncoded)) {
+                account.verifyEmail();
+                accountRepo.save(account) ;
+            }else {
+                throw new NoElementException("the account not found") ;
+            }
         }
-        return null  ;
     }
 
-    public void setRecommendationActivation(int id , boolean newStat) {
-        Costumer costumer = costumerRepo.findById(id).orElseThrow(()->{
-            throw new NoElementException("account not found") ;
-        }) ;
-        costumer.setRecommendationProfileActivation(newStat);
-        costumerRepo.save(costumer) ;
-    }
+
 }

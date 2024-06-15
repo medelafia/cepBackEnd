@@ -23,7 +23,10 @@ public class ReviewService {
         reviewRepository.deleteById(id);
     }
     public float getProviderScore(int id) {
-        return reviewRepository.getScoreAverage(id) ;
+        if(this.getReviewsByProviderId(id).size() != 0 ) {
+            return reviewRepository.getScoreAverage(id) ;
+        }
+        return 0.00f;
     }
     public int getProviderReviewsCount(int id) {
         return reviewRepository.getReviewsCountsByProviderId(id) ;

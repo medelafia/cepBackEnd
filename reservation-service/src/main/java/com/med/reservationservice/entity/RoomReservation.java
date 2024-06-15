@@ -9,6 +9,5 @@ import lombok.experimental.SuperBuilder;
 
 @Entity
 @NoArgsConstructor @Getter @Setter @SuperBuilder
-@AllArgsConstructor
 public class RoomReservation extends DaysReservation{
 }
