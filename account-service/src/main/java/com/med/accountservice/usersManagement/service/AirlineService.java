@@ -4,13 +4,16 @@ import com.med.accountservice.exceptions.NoElementException;
 import com.med.accountservice.offersManagement.entity.Flight;
 import com.med.accountservice.offersManagement.entity.TrainTravel;
 import com.med.accountservice.offersManagement.repository.FlightRepo;
+import com.med.accountservice.usersManagement.dto.ProviderResponse;
 import com.med.accountservice.usersManagement.entity.Airline;
+import com.med.accountservice.usersManagement.mapper.ProviderMapper;
 import com.med.accountservice.usersManagement.repository.AirlineRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AirlineService {
@@ -18,8 +21,10 @@ public class AirlineService {
     private AirlineRepo airlineRepo  ;
     @Autowired
     private FlightRepo flightRepo ;
-    public List<Airline> getAllAirlines() {
-        return airlineRepo.findAll() ;
+    public List<ProviderResponse> getAllAirlines() {
+        return airlineRepo.findAll().stream().map(airline -> {
+            return ProviderMapper.toProviderResponse(airline);
+        }).collect(Collectors.toList());
     }
     public Airline getAirlineById(int id) {
         return airlineRepo.findById(id).orElseThrow(()->{

@@ -1,6 +1,8 @@
 package com.med.accountservice.usersManagement.web;
 
 import com.med.accountservice.offersManagement.entity.Room;
+import com.med.accountservice.usersManagement.dto.HotelPosition;
+import com.med.accountservice.usersManagement.dto.ProviderResponse;
 import com.med.accountservice.usersManagement.entity.Hotel;
 import com.med.accountservice.usersManagement.service.HotelService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,14 @@ public class HotelController {
     @GetMapping("/{id}/rooms")
     public List<Room> getAllRoomsByHotelId(@PathVariable int id) {
         return hotelService.getAllRoomsByHotelId(id);
+    }
+    @GetMapping("/getHotelsPosition")
+    public List<HotelPosition> getAllHotelsPositions() {
+        return hotelService.getAllHotelsPositions() ;
+    }
+    @Autowired
+    public List<ProviderResponse> getAllHotels() {
+        return hotelService.getAllHotels() ;
     }
 }
 

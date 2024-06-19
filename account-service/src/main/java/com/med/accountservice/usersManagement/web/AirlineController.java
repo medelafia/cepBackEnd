@@ -1,6 +1,7 @@
 package com.med.accountservice.usersManagement.web;
 
 import com.med.accountservice.offersManagement.entity.Flight;
+import com.med.accountservice.usersManagement.dto.ProviderResponse;
 import com.med.accountservice.usersManagement.entity.Airline;
 import com.med.accountservice.usersManagement.service.AirlineService;
 import lombok.AllArgsConstructor;
@@ -11,11 +12,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/airlines")
+@CrossOrigin("http://localhost:5173")
 public class AirlineController {
     @Autowired
     private AirlineService airlineService ;
     @GetMapping("/")
-    public List<Airline> getAllAirlines() {
+    public List<ProviderResponse> getAllAirlines() {
         return airlineService.getAllAirlines() ;
     }
     @PostMapping("/{providerId}")

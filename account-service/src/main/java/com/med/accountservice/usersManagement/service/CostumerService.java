@@ -3,6 +3,7 @@ package com.med.accountservice.usersManagement.service;
 import com.med.accountservice.enums.AccountType;
 import com.med.accountservice.exceptions.ExceptionDetails;
 import com.med.accountservice.exceptions.NoElementException;
+import com.med.accountservice.imagesManagement.entity.Image;
 import com.med.accountservice.imagesManagement.service.ImageService;
 import com.med.accountservice.usersManagement.dto.CostumerUpdateRequest;
 import com.med.accountservice.usersManagement.entity.Account;
@@ -33,7 +34,7 @@ public class CostumerService {
     private ImageService imageService;
     public Account register(Costumer costumer) {
         costumer.setAccountType(AccountType.COSTUMER) ;
-        costumer.setPassword(passwordEncoder.encode(costumer.getPassword()));
+        if(costumer.getPassword() != null ) costumer.setPassword(passwordEncoder.encode(costumer.getPassword()));
         return costumerRepo.save(costumer) ;
     }
     public void setRecommendationActivation(int id , boolean newStat) {
@@ -71,14 +72,15 @@ public class CostumerService {
         }
         return null ;
     }
-    public Costumer changeProfile(int id , MultipartFile profileImage) {
-        Costumer costumer = costumerRepo.findById(id).orElseThrow(()->{
-            throw new NoElementException("the costumer not found")  ;
-        }) ;
-        if(costumer != null ) {
-            costumer.changeProfileImage(imageService.updloadImage(profileImage)) ;
-            return costumerRepo.save(costumer) ;
+    public Image changeProfile(int id , MultipartFile profileImage) {
+        if(costumerRepo.findById(id).isPresent()) {
+            Costumer costumer = costumerRepo.findById(id).get() ;
+            Image image = imageService.updloadImage(profileImage) ;
+            costumer.changeProfileImage(image) ;
+            costumerRepo.save(costumer) ;
+            return image ;
+        }else {
+            throw new NoElementException("the costumer not found") ;
         }
-        return null ;
     }
 }

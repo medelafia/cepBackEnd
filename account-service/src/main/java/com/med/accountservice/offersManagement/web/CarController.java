@@ -24,8 +24,4 @@ public class CarController {
     public boolean checkAvailable(@PathVariable int id) {
         return carService.checkAvailable(id) ;
     }
-    @GetMapping("/getAllCarsByProperties")
-    public List<Car> getAllCarsInAirportAndNbSeats(@RequestParam String airportId , @RequestParam int nbSeats) {
-        return carService.getAllCarsAvailableInAirportAndNbSeats(airportId , nbSeats) ;
-    }
 }

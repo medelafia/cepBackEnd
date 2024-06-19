@@ -6,6 +6,8 @@ import com.med.accountservice.offersManagement.entity.Car;
 import com.med.accountservice.offersManagement.repository.CarRepo;
 import com.med.accountservice.stationsManagement.entity.Airport;
 import com.med.accountservice.stationsManagement.repository.AirportRepo;
+import com.med.accountservice.usersManagement.mapper.ProviderMapper;
+import com.med.accountservice.usersManagement.repository.ProviderRepo;
 import org.apache.catalina.LifecycleState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,11 +20,14 @@ public class CarService {
     private CarRepo carRepo;
     @Autowired
     private AirportRepo airportRepo ;
+    @Autowired
+    private ProviderRepo providerRepo ;
     public List<Car> findAllCarsByProprieties() {
         return carRepo.findAll() ;
     }
     public List<Car> getAllCars() {
-        return carRepo.findAll() ;
+        List<Car> cars = carRepo.findAll() ;
+        return cars ;
     }
     public Car getCarById(int id) {
         Car car = carRepo.findById(id).orElseThrow(()->{
@@ -47,10 +52,5 @@ public class CarService {
         }
         return null ;
     }
-    public List<Car> getAllCarsAvailableInAirportAndNbSeats(String airportId , int nbSeats ){
-        Airport airport = airportRepo.findById(airportId).orElseThrow(()->{
-            throw new NoElementException("the airport nor found") ;
-        })  ;
-        return carRepo.findAllByAvailableInAndNumberOfSeats(airport , nbSeats) ;
-    }
+
 }

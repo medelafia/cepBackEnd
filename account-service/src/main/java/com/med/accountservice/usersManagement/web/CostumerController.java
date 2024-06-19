@@ -1,5 +1,6 @@
 package com.med.accountservice.usersManagement.web;
 
+import com.med.accountservice.imagesManagement.entity.Image;
 import com.med.accountservice.usersManagement.dto.CostumerUpdateRequest;
 import com.med.accountservice.usersManagement.entity.Account;
 import com.med.accountservice.usersManagement.entity.Costumer;
@@ -8,6 +9,7 @@ import com.med.accountservice.usersManagement.service.AccountService;
 import com.med.accountservice.usersManagement.service.CostumerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -40,5 +42,9 @@ public class CostumerController {
     @PostMapping("/writeReview")
     public Review writeReview(@RequestBody Review review) {
         return costumerService.writeReview(review) ;
+    }
+    @PostMapping("/{id}/changeProfileImage")
+    public Image changeProfileImage(@PathVariable int id ,  MultipartFile profile) {
+        return costumerService.changeProfile(id , profile) ;
     }
 }

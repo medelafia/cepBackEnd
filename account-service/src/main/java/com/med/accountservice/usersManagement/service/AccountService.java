@@ -1,8 +1,10 @@
 package com.med.accountservice.usersManagement.service;
 
 
+import com.med.accountservice.exceptions.ConflictException;
 import com.med.accountservice.exceptions.NoElementException;
 import com.med.accountservice.exceptions.PasswordIncorrectException;
+import com.med.accountservice.usersManagement.dto.AccountUpdateRequest;
 import com.med.accountservice.usersManagement.dto.CostumerUpdateRequest;
 import com.med.accountservice.usersManagement.dto.LoginRequest;
 import com.med.accountservice.usersManagement.dto.PasswordRequest;
@@ -52,13 +54,15 @@ public class AccountService {
     @Autowired
     private MailingRepo mailingRepo ;
     public Account login(LoginRequest loginRequest){
-        Account account = accountRepo.findByUsername(loginRequest.getUsername()).orElseThrow(()->{
-            throw new NoElementException("account not found") ;
-        }) ;
-        if(passwordEncoder.matches(loginRequest.getPassword() , account.getPassword())) {
-            return account ;
+        if(accountRepo.findByUsernameOrEmail(loginRequest.getUsername(), loginRequest.getUsername()).isPresent()) {
+            Account account = accountRepo.findByUsernameOrEmail(loginRequest.getUsername(), loginRequest.getUsername()).get() ;
+            if (passwordEncoder.matches(loginRequest.getPassword(), account.getPassword())) {
+                return account;
+            } else {
+                throw new PasswordIncorrectException("the password is incorrect");
+            }
         }else {
-            throw new PasswordIncorrectException("the password is incorrect") ;
+            throw new NoElementException("you are not registred ") ;
         }
     }
     public Account loginByEmail(String email) {
@@ -139,4 +143,38 @@ public class AccountService {
     }
 
 
+    public Account updateAccountInfo(int id , AccountUpdateRequest accountUpdateRequest) {
+        Account account = accountRepo.findById(id).orElseThrow(()->{
+            throw new NoElementException("the account not found") ;
+        }) ;
+        if (account!=null) {
+            if(account.getUsername() == accountUpdateRequest.getUsername()) {
+                if(account.getEmail() != accountUpdateRequest.getEmail()) {
+                    if(accountRepo.findByEmail(accountUpdateRequest.getEmail()).isPresent()) {
+                        throw new ConflictException("the email is used , try another one") ;
+                    }else {
+                        account.setEmail(accountUpdateRequest.getEmail());
+                        account.setTel(accountUpdateRequest.getTel()) ;
+                    }
+                }
+            }else {
+                if(accountRepo.findByUsername(accountUpdateRequest.getUsername()).isPresent()) {
+                    throw new ConflictException("the username is used , try another one") ;
+                }else {
+                    account.setUsername(accountUpdateRequest.getUsername());
+                    if(account.getEmail() != accountUpdateRequest.getEmail()) {
+                        if(accountRepo.findByEmail(accountUpdateRequest.getEmail()).isPresent()) {
+                            throw new ConflictException("the email is used , try another one") ;
+                        }else {
+                            account.setEmail(accountUpdateRequest.getEmail());
+                            account.setTel(accountUpdateRequest.getTel()) ;
+                        }
+                    }
+                }
+            }
+
+            return accountRepo.save(account) ;
+        }
+        return null ;
+    }
 }

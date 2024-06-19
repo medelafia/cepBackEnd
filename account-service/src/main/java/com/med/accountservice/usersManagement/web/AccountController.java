@@ -1,5 +1,6 @@
 package com.med.accountservice.usersManagement.web;
 
+import com.med.accountservice.usersManagement.dto.AccountUpdateRequest;
 import com.med.accountservice.usersManagement.dto.CostumerUpdateRequest;
 import com.med.accountservice.usersManagement.dto.LoginRequest;
 import com.med.accountservice.usersManagement.dto.PasswordRequest;
@@ -42,5 +43,9 @@ public class AccountController {
     @GetMapping("/verifierEmail")
     public void verifierEmail(@RequestParam int id , @RequestParam String emailEncoded ) {
         accountService.verifierEmail(id , emailEncoded);
+    }
+    @PostMapping("/{id}/updateAccountInfo")
+    public Account updateAccountInfo(@RequestBody AccountUpdateRequest accountUpdateRequest , @PathVariable int id) {
+        return accountService.updateAccountInfo(id , accountUpdateRequest) ;
     }
 }

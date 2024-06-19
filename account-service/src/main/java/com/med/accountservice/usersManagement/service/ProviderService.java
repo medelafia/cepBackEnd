@@ -8,6 +8,7 @@ import com.med.accountservice.imagesManagement.service.ImageService;
 import com.med.accountservice.usersManagement.dto.ProviderResponse;
 import com.med.accountservice.usersManagement.entity.*;
 import com.med.accountservice.usersManagement.feignClient.ReviewsRepo;
+import com.med.accountservice.usersManagement.mapper.ProviderMapper;
 import com.med.accountservice.usersManagement.model.Review;
 import com.med.accountservice.usersManagement.repository.*;
 import org.aspectj.apache.bcel.classfile.Module;
@@ -37,23 +38,12 @@ public class ProviderService {
     @Autowired
     ImageService imageService ;
     public ProviderResponse getProviderInfo(int id) {
-        Provider provider = providerRepo.findById(id).orElseThrow(()->{
+        if(providerRepo.findById(id).isPresent()) {
+            Provider provider = providerRepo.findById(id).get() ;
+            return ProviderMapper.toProviderResponse(provider);
+        }else {
             throw new NoElementException("the provider not found") ;
-        }) ;
-        if(provider != null) {
-            ProviderResponse providerResponse = ProviderResponse.builder()
-                    .name(provider.getCompanyName())
-                    .email(provider.getEmail())
-                    .webSiteUrl(provider.getWebSiteUrl())
-                    .reviewsCount(reviewsRepo.getReviewsCount(provider.getId()))
-                    .score(reviewsRepo.getScoreAvg(provider.getId()))
-                    .reviews(reviewsRepo.getAllReviewsByProviderId(provider.getId()))
-                    .images(provider.getImages())
-                    .logo(provider.getLogo())
-                    .build() ;
-            return providerResponse ;
         }
-        return null ;
     }
     public Provider register(Airline airline) {
         airline.setPassword(passwordEncoder.encode(airline.getPassword()));

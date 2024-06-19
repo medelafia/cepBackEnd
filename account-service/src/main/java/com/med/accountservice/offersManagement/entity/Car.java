@@ -6,6 +6,7 @@ import com.med.accountservice.enums.StyleType;
 import com.med.accountservice.enums.TransType;
 import com.med.accountservice.imagesManagement.entity.Image;
 import com.med.accountservice.stationsManagement.entity.Airport;
+import com.med.accountservice.usersManagement.dto.ProviderResponse;
 import com.med.accountservice.usersManagement.entity.CarsAgency;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -37,6 +38,8 @@ public class Car extends Offer {
     private boolean available  ;
     @ManyToOne
     private CarsAgency carsAgency ;
+    @Transient
+    private ProviderResponse providerInfo ;
     @ManyToOne
     private Airport availableIn ;
     public List<Image> addImage(Image image) {

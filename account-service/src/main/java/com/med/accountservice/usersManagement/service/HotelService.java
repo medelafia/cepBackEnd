@@ -3,7 +3,10 @@ package com.med.accountservice.usersManagement.service;
 import com.med.accountservice.exceptions.NoElementException;
 import com.med.accountservice.offersManagement.entity.Room;
 import com.med.accountservice.offersManagement.repository.RoomRepo;
+import com.med.accountservice.usersManagement.dto.HotelPosition;
+import com.med.accountservice.usersManagement.dto.ProviderResponse;
 import com.med.accountservice.usersManagement.entity.Hotel;
+import com.med.accountservice.usersManagement.mapper.ProviderMapper;
 import com.med.accountservice.usersManagement.repository.HotelRepo;
 import org.apache.coyote.http11.HeadersTooLargeException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,7 @@ import org.springframework.cloud.client.HostInfoEnvironmentPostProcessor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class HotelService {
@@ -22,8 +26,8 @@ public class HotelService {
         Hotel hotel = hotelRepo.findById(providerId).orElseThrow(()->{
             throw new NoElementException("the hotel not found") ;
         }) ;
-        hotel.createNewRoom(roomRepo.save(room) ) ;
-        return hotel ;
+        hotel.createNewRoom(roomRepo.save(room)) ;
+        return hotelRepo.save(hotel) ;
     }
     public List<Room> getAllRoomsByHotelId(int id){
         Hotel hotel = hotelRepo.findById(id).orElseThrow(()->{
@@ -33,5 +37,22 @@ public class HotelService {
             return hotel.getRooms() ;
         }
         return null ;
+    }
+
+    public List<HotelPosition> getAllHotelsPositions() {
+        List<Hotel> hotels = hotelRepo.findAll() ;
+        List<HotelPosition> hotelPositions = hotels.stream().map(hotel -> {
+            return HotelPosition.builder()
+                    .hotelId(hotel.getId())
+                    .lat(hotel.getLatitude())
+                    .lng(hotel.getLongitude())
+                    .build() ;
+        }).collect(Collectors.toList());
+        return hotelPositions ;
+    }
+    public List<ProviderResponse> getAllHotels() {
+        return hotelRepo.findAll().stream().map(hotel -> {
+            return ProviderMapper.toProviderResponse(hotel) ;
+        }).collect(Collectors.toList());
     }
 }

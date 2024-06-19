@@ -18,8 +18,9 @@ public class Room extends Offer {
     @Enumerated(value = EnumType.STRING)
     private RoomType roomType ;
     private int nbOfAdults ;
-    private int nbOfChild ;
+    private int nbOfChilds ;
     private boolean available ;
+    private int roomNumber ;
     @OneToMany
     private List<Image> images ;
     @ManyToOne

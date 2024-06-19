@@ -4,6 +4,7 @@ import com.med.accountservice.exceptions.NoElementException;
 import com.med.accountservice.offersManagement.entity.Car;
 import com.med.accountservice.offersManagement.repository.CarRepo;
 import com.med.accountservice.usersManagement.entity.CarsAgency;
+import com.med.accountservice.usersManagement.mapper.ProviderMapper;
 import com.med.accountservice.usersManagement.repository.CarsAgencyRepo;
 import com.netflix.discovery.converters.Auto;
 import lombok.AllArgsConstructor;
@@ -26,12 +27,11 @@ public class CarsAgencyService {
         return carsAgencyRepo.save(carsAgency);
     }
     public List<Car> getAllCarsByCarAgencyId(int id) {
-        CarsAgency carsAgency = carsAgencyRepo.findById(id).orElseThrow(()->{
-            throw new NoElementException("the car agency not found") ;
-        }) ;
-        if(carsAgency != null ) {
+        if(carsAgencyRepo.findById(id).isPresent()) {
+            CarsAgency carsAgency = carsAgencyRepo.findById(id).get() ;
             return carsAgency.getCars() ;
+        }else {
+            throw new NoElementException("the car agency doesn't exist") ;
         }
-        return null ;
     }
 }
