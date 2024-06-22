@@ -31,7 +31,7 @@ public class FlightService {
         Airport endAirport = airportRepo.findById(endAirportId).orElseThrow(()->{
             throw new NoElementException("the airport not found") ;
         }) ;
-        return flightRepo.findAllByDepartDateAndReturnDateAndFromAndTo(departDate , returnDate , startAirport , endAirport) ;
+        return flightRepo.findAllByDepartureDateAndReturnDateAndFromAndTo(departDate , returnDate , startAirport , endAirport) ;
     }
     public List<Flight> findAllOneWayFlights(String startAirportId , String endAirportId , Date departDate) {
         Airport startAirport = airportRepo.findById(startAirportId).orElseThrow(()->{
@@ -40,6 +40,6 @@ public class FlightService {
         Airport endAirport = airportRepo.findById(endAirportId).orElseThrow(()->{
             throw new NoElementException("the airport not found") ;
         }) ;
-        return flightRepo.findAllByDepartDateAndFromAndTo(departDate , startAirport , endAirport) ;
+        return flightRepo.findAllByDepartureDateAndFromAndTo(departDate , startAirport , endAirport) ;
     }
 }

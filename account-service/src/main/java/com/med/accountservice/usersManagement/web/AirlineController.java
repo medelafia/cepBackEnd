@@ -31,4 +31,8 @@ public class AirlineController {
     public List<Flight> getAllFlightsByAirlineId(@PathVariable int id ) {
         return airlineService.getAllFlightsByAirlineId(id);
     }
+    @PostMapping("/{id}/flights/{flight_id}")
+    public void deleteFlight(@PathVariable int id , @PathVariable int flight_id) {
+        airlineService.deleteFlight(id , flight_id );
+    }
 }

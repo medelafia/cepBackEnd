@@ -16,7 +16,7 @@ import java.util.List;
 @Getter @Setter
 @NoArgsConstructor
 public class TrainTravel extends Travel {
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     RailwayOperator railwayOperator ;
     @ManyToOne
     TrainStation from ;

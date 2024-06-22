@@ -4,8 +4,9 @@ import com.cloudinary.Cloudinary;
 import com.med.accountservice.enums.AccountType;
 import com.med.accountservice.enums.DestinationType;
 import com.med.accountservice.enums.ProviderType;
-import com.med.accountservice.offersManagement.entity.Destination;
-import com.med.accountservice.offersManagement.repository.DestinationRepo;
+import com.med.accountservice.usersManagement.entity.*;
+import com.med.accountservice.usersManagement.repository.*;
+import com.med.accountservice.usersManagement.service.ProviderService;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.impl.DefaultJwtBuilder;
 import org.springframework.boot.CommandLineRunner;
@@ -41,9 +42,10 @@ public class AccountServiceApplication {
         return new BCryptPasswordEncoder();
     }
     //@Bean
-    public CommandLineRunner start(DestinationRepo destinationRepo ) {
+    public CommandLineRunner start(
+            ProviderService providerService
+    ) {
         return ar -> {
-
         };
     }
     @Bean

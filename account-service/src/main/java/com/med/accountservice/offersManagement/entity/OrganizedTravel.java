@@ -14,15 +14,14 @@ import java.util.List;
 @Entity @NoArgsConstructor @AllArgsConstructor @SuperBuilder
 @Getter @Setter
 public class OrganizedTravel extends Travel {
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     private TravelAgency travelAgency ;
     private int nbDays ;
-    private String country ;
-    private String city ;
     private boolean includeTrans ;
     private boolean includeHotel ;
+    private boolean limitPlaces ;
     @ManyToOne
-    private Airport startAirport ;
+    private Airport originAirport ;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Airport> passedAirport ;
 }

@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface FlightRepo extends JpaRepository<Flight , Integer> {
     public List<Flight> findAllByAirlineId(int id) ;
-    public List<Flight> findAllByDepartDateAndReturnDateAndFromAndTo(Date departDate , Date returnDate , Airport from, Airport to) ;
-    public List<Flight> findAllByDepartDateAndFromAndTo(Date departDate , Airport from, Airport to) ;
+    public List<Flight> findAllByDepartureDateAndReturnDateAndFromAndTo(Date departDate , Date returnDate , Airport from, Airport to) ;
+    public List<Flight> findAllByDepartureDateAndFromAndTo(Date departDate , Airport from, Airport to) ;
 }

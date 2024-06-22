@@ -48,17 +48,16 @@ public class CostumerService {
         return costumerRepo.findAll() ;
     }
     public Costumer updateInfo(int userId , CostumerUpdateRequest costumerUpdateRequest) {
-        Costumer costumer = costumerRepo.findById(userId).orElseThrow(()->{
-            throw new NoElementException("the account not found") ;
-        }) ;
-        if( costumer != null ){
+        if(costumerRepo.findById(userId).isPresent()){
+            Costumer costumer = costumerRepo.findById(userId).get() ;
             costumer.setAge(costumerUpdateRequest.getAge());
             costumer.setGender(costumerUpdateRequest.getGender());
             costumer.setFirstName(costumerUpdateRequest.getFirstName());
             costumer.setLastName(costumerUpdateRequest.getLastName());
             return costumerRepo.save(costumer) ;
+        }else {
+            throw new NoElementException("the account not found");
         }
-        return null  ;
     }
     public Review writeReview(Review review) {
         Provider provider = providerRepo.findById(review.getProviderId()).orElseThrow(()-> {

@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Setter
 @NoArgsConstructor
 public class RailwayOperator extends Provider{
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.REMOVE)
     private List<TrainTravel> travelList ;
     public List<TrainTravel> createNewTrainTravel(TrainTravel trainTravel) {
         travelList.add(trainTravel);

@@ -22,8 +22,8 @@ public class ProviderController {
     @Autowired
     private ProviderService providerService ;
     @GetMapping("/")
-    public List<Provider> getAllProviders(){
-        return accountService.getAllProviders() ;
+    public List<ProviderResponse> getAllProviders(){
+        return providerService.getAllProviders() ;
     }
     @GetMapping("/{id}")
     public ProviderResponse getProvider(@PathVariable int id){

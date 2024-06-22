@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @Setter
 @NoArgsConstructor
 public class Airline extends Provider {
-    @OneToMany
+    @OneToMany(cascade = CascadeType.REMOVE)
     private List<Flight> flights ;
     public List<Flight> createNewFlight(Flight flight) {
         this.flights.add(flight) ;

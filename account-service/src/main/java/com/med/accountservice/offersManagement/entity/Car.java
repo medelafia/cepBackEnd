@@ -36,12 +36,12 @@ public class Car extends Offer {
     private boolean airConditioning ;
     private boolean freeCancelation ;
     private boolean available  ;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     private CarsAgency carsAgency ;
     @Transient
     private ProviderResponse providerInfo ;
     @ManyToOne
-    private Airport availableIn ;
+    private Airport airport ;
     public List<Image> addImage(Image image) {
         this.getImages().add(image) ;
         return images ;

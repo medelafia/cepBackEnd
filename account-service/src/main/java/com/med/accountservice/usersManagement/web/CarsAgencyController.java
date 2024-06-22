@@ -30,4 +30,8 @@ public class CarsAgencyController {
     public List<Car> getAllCarsByCarsAgencyId(@PathVariable  int id){
         return carsAgencyService.getAllCarsByCarAgencyId(id);
     }
+    @PostMapping("/{id}/cars/{car_id}")
+    public void deleteCar( @PathVariable int id ,@PathVariable int car_id){
+        carsAgencyService.deleteCar(id , car_id) ;
+    }
 }

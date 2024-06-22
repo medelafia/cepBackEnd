@@ -9,7 +9,7 @@ public class ProviderMapper {
                 .logo(provider.getLogo())
                 .images(provider.getImages())
                 .score(provider.getScore())
-                .name(provider.getCompanyName())
+                .name(provider.getName())
                 .email(provider.getEmail())
                 .webSiteUrl(provider.getWebSiteUrl())
                 .reviewsCount(provider.getNbReviews())

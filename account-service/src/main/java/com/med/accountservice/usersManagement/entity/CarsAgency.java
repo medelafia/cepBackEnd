@@ -13,8 +13,8 @@ import java.util.List;
 @Entity
 @AllArgsConstructor @Getter @Setter @NoArgsConstructor
 public class CarsAgency extends Provider{
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<Car> cars = new ArrayList<>();
+    @OneToMany(fetch = FetchType.EAGER , cascade = CascadeType.REMOVE )
+    private List<Car> cars ;
     public List<Car> createNewCar(Car car) {
         this.cars.add(car) ;
         return this.cars ;

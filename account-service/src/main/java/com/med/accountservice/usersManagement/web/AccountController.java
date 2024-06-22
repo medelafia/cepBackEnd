@@ -44,7 +44,7 @@ public class AccountController {
     public void verifierEmail(@RequestParam int id , @RequestParam String emailEncoded ) {
         accountService.verifierEmail(id , emailEncoded);
     }
-    @PostMapping("/{id}/updateAccountInfo")
+    @PostMapping("/{id}/update")
     public Account updateAccountInfo(@RequestBody AccountUpdateRequest accountUpdateRequest , @PathVariable int id) {
         return accountService.updateAccountInfo(id , accountUpdateRequest) ;
     }

@@ -17,6 +17,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class ProviderService {
     @Autowired
@@ -94,5 +97,11 @@ public class ProviderService {
             return providerRepo.save(provider) ;
         }
         return null ;
+    }
+
+    public List<ProviderResponse> getAllProviders() {
+        List<Provider> providers = providerRepo.findAll() ;
+        List<ProviderResponse> providerResponses = providers.stream().map(provider -> ProviderMapper.toProviderResponse(provider)).collect(Collectors.toList()); ;
+        return providerResponses;
     }
 }

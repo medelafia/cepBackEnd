@@ -56,4 +56,24 @@ public class AirlineService {
         }
         return null ;
     }
+
+    public void deleteFlight(int id, int flightId) {
+        if(airlineRepo.findById(id).isPresent()) {
+            Airline airline = airlineRepo.findById(id).get() ;
+            if(flightRepo.findById(flightId).isPresent()) {
+                Flight flight = flightRepo.findById(flightId).get() ;
+                if(airline.getFlights().contains(flight)) {
+                    airline.setFlights(airline.getFlights().stream().filter(f -> f.getId() != flightId).collect(Collectors.toList()));
+                    airlineRepo.save(airline) ;
+                    flightRepo.deleteById(flightId);
+                }else {
+                    throw new NoElementException("the airline doesn't have this flight") ;
+                }
+            }else {
+                throw new NoElementException("the flight not exist") ;
+            }
+        }else {
+            throw new NoElementException("the airline not exist") ;
+        }
+    }
 }

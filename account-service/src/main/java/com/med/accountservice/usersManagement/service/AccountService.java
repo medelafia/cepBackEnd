@@ -66,13 +66,15 @@ public class AccountService {
         }
     }
     public Account loginByEmail(String email) {
-        Account account = accountRepo.findByEmail(email).orElseThrow(()->{
-            throw new NoElementException("the account not found ") ;
-        }) ;
-        if(account.isRegisterByGoogle()){
-            return account ;
+        if(accountRepo.findByEmail(email).isPresent()) {
+            Account account = accountRepo.findByEmail(email).get() ;
+            if(account.isRegisterByGoogle()) {
+                return account ;
+            }else {
+                throw new NoElementException("your are not registered by google") ;
+            }
         }else {
-         throw new NoElementException("account not found") ;
+            throw new NoElementException("the account not found") ;
         }
     }
     public List<Costumer> getAllCostumers() {
@@ -144,10 +146,8 @@ public class AccountService {
 
 
     public Account updateAccountInfo(int id , AccountUpdateRequest accountUpdateRequest) {
-        Account account = accountRepo.findById(id).orElseThrow(()->{
-            throw new NoElementException("the account not found") ;
-        }) ;
-        if (account!=null) {
+        if (accountRepo.findById(id).isPresent()) {
+            Account account = accountRepo.findById(id).get() ;
             if(account.getUsername() == accountUpdateRequest.getUsername()) {
                 if(account.getEmail() != accountUpdateRequest.getEmail()) {
                     if(accountRepo.findByEmail(accountUpdateRequest.getEmail()).isPresent()) {
@@ -174,7 +174,8 @@ public class AccountService {
             }
 
             return accountRepo.save(account) ;
+        }else {
+            throw new NoElementException("the account not found") ;
         }
-        return null ;
     }
 }

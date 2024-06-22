@@ -23,15 +23,15 @@ public class CostumerController {
     public List<Costumer> getALLCostumers() {
         return costumerService.getAllCostumers() ;
     }
-    @PostMapping("/update/{id}")
+    @PostMapping("/{id}/update")
     public Costumer updateInfo(@PathVariable int id , @RequestBody CostumerUpdateRequest costumer) {
         return costumerService.updateInfo(id , costumer) ;
     }
-    @PostMapping("/disableRecommendation/{id}")
+    @PostMapping("/{id}/disableRecommendation")
     public void disableRecommendation(@PathVariable int id) {
         costumerService.setRecommendationActivation(id , false); ;
     }
-    @PostMapping("/enableRecommendation/{id}")
+    @PostMapping("/{id}/enableRecommendation")
     public void enableRecommendation(@PathVariable int id) {
         costumerService.setRecommendationActivation(id , true); ;
     }

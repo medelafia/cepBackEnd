@@ -15,9 +15,11 @@ import java.util.List;
 @AllArgsConstructor @NoArgsConstructor @Getter @Setter
 @SuperBuilder
 public class Provider extends Account {
-    private String CompanyName ;
+    private String name ;
     private String country ;
     private String webSiteUrl ;
+    private String fax ;
+    private String physicalAddress ;
     @Enumerated(value = EnumType.STRING)
     private ProviderType providerType ;
     @OneToOne

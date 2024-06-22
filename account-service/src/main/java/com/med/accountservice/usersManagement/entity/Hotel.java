@@ -13,11 +13,9 @@ import java.util.stream.Collectors;;
 public class Hotel extends Provider{
     private int nbStars ;
     private String address ;
-    private String country ;
-    private String city ;
     private float longitude ;
     private float latitude ;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.REMOVE)
     private List<Room>  rooms ;
     public List<Room> createNewRoom(Room room){
         this.rooms.add(room) ;

@@ -16,6 +16,14 @@ import java.util.List;
 public class HotelController {
     @Autowired
     private HotelService hotelService ;
+    @GetMapping("/")
+    public List<ProviderResponse> getAllHotels() {
+        return hotelService.getAllHotels() ;
+    }
+    @GetMapping("/{keyword}")
+    public List<ProviderResponse> getAllHotelsContainsKeyword(@PathVariable String keyword) {
+        return hotelService.getAllHotelsContainsKeyword(keyword) ;
+    }
     @PostMapping("/{id}")
     public Hotel addNewRoom(@RequestBody Room room  ,@PathVariable  int id)  {
         return hotelService.addNewRoom(id , room) ;
@@ -28,9 +36,9 @@ public class HotelController {
     public List<HotelPosition> getAllHotelsPositions() {
         return hotelService.getAllHotelsPositions() ;
     }
-    @Autowired
-    public List<ProviderResponse> getAllHotels() {
-        return hotelService.getAllHotels() ;
+    @PostMapping ("/{id}/rooms/{room_id}")
+    public void deleteRoom(@PathVariable int id , @PathVariable int room_id ) {
+        hotelService.deleteRoom(id , room_id) ;
     }
 }
 

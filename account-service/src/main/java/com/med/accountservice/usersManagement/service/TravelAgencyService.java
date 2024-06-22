@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TravelAgencyService{
@@ -31,5 +32,25 @@ public class TravelAgencyService{
         }) ;
         if( travelAgency != null ) return travelAgency.getTravels() ;
         return null ;
+    }
+
+    public void deleteOrganizedTravel(int id, int travelId) {
+        if(travelAgencyRepo.findById(id).isPresent()) {
+            TravelAgency travelAgency = travelAgencyRepo.findById(id).get() ;
+            if(organizedTravelRepo.findById(travelId).isPresent()) {
+                OrganizedTravel organizedTravel = organizedTravelRepo.findById(travelId).get() ;
+                if(travelAgency.getTravels().contains(organizedTravel)){
+                    travelAgency.setTravels(travelAgency.getTravels().stream().filter(travel -> travel.getId() != travelId).collect(Collectors.toList()));
+                    travelAgencyRepo.save(travelAgency)  ;
+                    organizedTravelRepo.deleteById(travelId);
+                }else {
+                    throw new NoElementException("your travel agency doesn't have this travel") ;
+                }
+            }else {
+                throw new NoElementException("the travel not found") ;
+            }
+        }else {
+            throw new NoElementException("the travel agency not found") ;
+        }
     }
 }

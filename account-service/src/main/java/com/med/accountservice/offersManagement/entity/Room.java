@@ -23,7 +23,7 @@ public class Room extends Offer {
     private int roomNumber ;
     @OneToMany
     private List<Image> images ;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     private Hotel hotel ;
 
     public List<Image> addImage(Image image) {

@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @Setter
 @NoArgsConstructor
 public class TravelAgency extends Provider{
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.REMOVE)
     private List<OrganizedTravel> travels ;
     public List<OrganizedTravel> createNewOrganizedTravel(OrganizedTravel organizedTravel) {
         travels.add(organizedTravel) ;

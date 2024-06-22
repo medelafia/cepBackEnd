@@ -11,7 +11,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.print.attribute.standard.MediaSize;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CarsAgencyService {
@@ -32,6 +34,26 @@ public class CarsAgencyService {
             return carsAgency.getCars() ;
         }else {
             throw new NoElementException("the car agency doesn't exist") ;
+        }
+    }
+
+    public void deleteCar(int id, int carId) {
+        if(carsAgencyRepo.findById(id).isPresent()) {
+            CarsAgency carsAgency = carsAgencyRepo.findById(id).get() ;
+            if(carRepo.findById(carId).isPresent()) {
+                Car car = carRepo.findById(carId).get();
+                if(carsAgency.getCars().contains(car)) {
+                    carsAgency.setCars(carsAgency.getCars().stream().filter(c -> c.getId() != carId).collect(Collectors.toList()));
+                    carsAgencyRepo.save(carsAgency) ;
+                    carRepo.deleteById(carId);
+                }else {
+                    throw new NoElementException("your car agency doesn't have this car") ;
+                }
+            }else {
+                throw new NoElementException("the car not exist ") ;
+            }
+        }else {
+            throw new NoElementException("the car agency not exist") ;
         }
     }
 }

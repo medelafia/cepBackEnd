@@ -55,4 +55,28 @@ public class HotelService {
             return ProviderMapper.toProviderResponse(hotel) ;
         }).collect(Collectors.toList());
     }
+
+    public void deleteRoom(int id, int roomId) {
+        if(hotelRepo.findById(id).isPresent()) {
+            Hotel hotel = hotelRepo.findById(id).get() ;
+            if(roomRepo.findById(roomId).isPresent()) {
+                Room room = roomRepo.findById(roomId).get() ;
+                if(hotel.getRooms().contains(room)){
+                    hotel.setRooms(hotel.getRooms().stream().filter(r -> r.getId() != roomId).toList()) ;
+                    hotelRepo.save(hotel) ;
+                    roomRepo.deleteById(roomId);
+                }else {
+                    throw new NoElementException("your hotel not contains this room") ;
+                }
+            }else {
+                throw new NoElementException("the room not found") ;
+            }
+        }else {
+            throw new NoElementException("the hotel not found") ;
+        }
+    }
+
+    public List<ProviderResponse> getAllHotelsContainsKeyword(String keyword) {
+        return hotelRepo.findAllByNameContains(keyword).stream().map(hotel -> ProviderMapper.toProviderResponse(hotel)).collect(Collectors.toList());
+    }
 }
