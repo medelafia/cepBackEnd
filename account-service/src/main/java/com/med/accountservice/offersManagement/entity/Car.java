@@ -21,29 +21,22 @@ import java.util.List;
 public class Car extends Offer {
     private String make ;
     private String model ;
-    private int year ;
     @Enumerated(value = EnumType.STRING)
     private FuelType fuelType ;
     @Enumerated(value = EnumType.STRING)
     private TransType transType ;
     @Enumerated(value = EnumType.STRING)
     private StyleType styleType ;
-    @OneToMany
-    private List<Image> images ;
-    private int numberOfSeats ;
-    private int numberOfDoors ;
-    private int numberOfSuitcases ;
+    @OneToOne
+    private Image image ;
+    private int seats ;
+    private int doors ;
+    private int bags ;
     private boolean airConditioning ;
     private boolean freeCancelation ;
     private boolean available  ;
     @ManyToOne(cascade = CascadeType.REMOVE)
     private CarsAgency carsAgency ;
-    @Transient
-    private ProviderResponse providerInfo ;
     @ManyToOne
     private Airport airport ;
-    public List<Image> addImage(Image image) {
-        this.getImages().add(image) ;
-        return images ;
-    }
 }

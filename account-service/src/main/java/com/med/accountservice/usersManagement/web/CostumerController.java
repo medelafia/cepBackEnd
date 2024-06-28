@@ -44,7 +44,7 @@ public class CostumerController {
         return costumerService.writeReview(review) ;
     }
     @PostMapping("/{id}/changeProfileImage")
-    public Image changeProfileImage(@PathVariable int id ,  MultipartFile profile) {
-        return costumerService.changeProfile(id , profile) ;
+    public Image changeProfileImage(@PathVariable int id ,  MultipartFile image) {
+        return costumerService.changeProfile(id , image) ;
     }
 }

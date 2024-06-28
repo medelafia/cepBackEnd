@@ -1,11 +1,6 @@
 package com.med.accountservice;
 
 import com.cloudinary.Cloudinary;
-import com.med.accountservice.enums.AccountType;
-import com.med.accountservice.enums.DestinationType;
-import com.med.accountservice.enums.ProviderType;
-import com.med.accountservice.usersManagement.entity.*;
-import com.med.accountservice.usersManagement.repository.*;
 import com.med.accountservice.usersManagement.service.ProviderService;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.impl.DefaultJwtBuilder;
@@ -14,6 +9,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import java.sql.Timestamp;

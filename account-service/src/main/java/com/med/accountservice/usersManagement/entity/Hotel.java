@@ -11,8 +11,7 @@ import java.util.stream.Collectors;;
 @Entity
 @AllArgsConstructor @NoArgsConstructor @Getter @Setter @SuperBuilder
 public class Hotel extends Provider{
-    private int nbStars ;
-    private String address ;
+    private int stars ;
     private float longitude ;
     private float latitude ;
     @OneToMany(cascade = CascadeType.REMOVE)

@@ -1,12 +1,11 @@
 package com.med.accountservice.usersManagement.web;
 
-import com.med.accountservice.usersManagement.dto.AccountUpdateRequest;
-import com.med.accountservice.usersManagement.dto.CostumerUpdateRequest;
-import com.med.accountservice.usersManagement.dto.LoginRequest;
-import com.med.accountservice.usersManagement.dto.PasswordRequest;
+import com.med.accountservice.usersManagement.dto.*;
 import com.med.accountservice.usersManagement.entity.Account;
 import com.med.accountservice.usersManagement.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -17,8 +16,8 @@ public class AccountController {
     @Autowired
     private AccountService accountService ;
     @PostMapping("/login")
-    public Account login(@RequestBody LoginRequest loginRequest) {
-        return accountService.login(loginRequest) ;
+    public LoginResponse login(@RequestBody LoginRequest loginRequest) {
+        return accountService.login(loginRequest);
     }
     @PostMapping("/loginByEmail")
     public Account loginByEmail(@RequestParam String email) {
@@ -30,7 +29,7 @@ public class AccountController {
      }
      @PostMapping("/verifierResetSession/{id}")
     public int verifierResetSession(@PathVariable String id) {
-        return accountService.verifierResetSession(id) ;
+        return 10 ;
      }
     @PostMapping("/changePassword")
     public void changePassword(@RequestBody PasswordRequest passwordRequest) {

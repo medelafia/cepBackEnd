@@ -1,6 +1,8 @@
 package com.med.accountservice.usersManagement.web;
 
+import com.med.accountservice.imagesManagement.entity.Image;
 import com.med.accountservice.usersManagement.dto.ProviderResponse;
+import com.med.accountservice.usersManagement.dto.ProviderUpdateRequest;
 import com.med.accountservice.usersManagement.entity.*;
 import com.med.accountservice.usersManagement.model.Review;
 import com.med.accountservice.usersManagement.service.AccountService;
@@ -50,7 +52,19 @@ public class ProviderController {
         return providerService.register(travelAgency) ;
     }
     @PostMapping("/{id}/changeLogo")
-    public Provider changeLogo(@PathVariable int id ,  MultipartFile logo) {
-        return providerService.changeLogo(id , logo) ;
+    public Provider changeLogo(@PathVariable int id ,  MultipartFile image) {
+        return providerService.changeLogo(id , image) ;
+    }
+    @PostMapping("/{id}/update")
+    public Provider updateProviderInfo(@PathVariable int id , @RequestBody ProviderUpdateRequest providerUpdateRequest ) {
+        return providerService.updateProviderInfo(id , providerUpdateRequest) ;
+    }
+    @GetMapping("/{id}/getImages")
+    public List<Image> getImages(@PathVariable int id) {
+        return providerService.getAllImages(id) ;
+    }
+    @PostMapping("/{id}/addImages")
+    public List<Image> addImages(@PathVariable int id , MultipartFile[] images) {
+        return providerService.addImages(id , images ) ;
     }
 }

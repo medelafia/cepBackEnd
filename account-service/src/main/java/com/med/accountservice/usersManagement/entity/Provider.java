@@ -1,6 +1,5 @@
 package com.med.accountservice.usersManagement.entity;
 
-import com.med.accountservice.enums.ProviderType;
 import com.med.accountservice.imagesManagement.entity.Image;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -16,12 +15,8 @@ import java.util.List;
 @SuperBuilder
 public class Provider extends Account {
     private String name ;
-    private String country ;
     private String webSiteUrl ;
     private String fax ;
-    private String physicalAddress ;
-    @Enumerated(value = EnumType.STRING)
-    private ProviderType providerType ;
     @OneToOne
     private Image logo ;
     @Transient
@@ -43,8 +38,8 @@ public class Provider extends Account {
         this.logo = newLogo  ;
         return this ;
     }
-    public Provider addImage(Image image) {
-        this.getImages().add(image) ;
+    public Provider addImages(List<Image> images) {
+        this.getImages().addAll(images) ;
         return this ;
     }
 }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/rooms")
+@RequestMapping("/offer/rooms")
 @CrossOrigin("http://localhost:5173")
 public class RoomController {
     @Autowired
@@ -27,4 +27,9 @@ public class RoomController {
     public boolean checkAvailable(@PathVariable int id) {
         return roomService.checkAvailable(id);
     }
+    @GetMapping("/{id}")
+    public Room getRoomById(@PathVariable int id) {
+        return roomService.getRoomById(id) ;
+    }
 }
+

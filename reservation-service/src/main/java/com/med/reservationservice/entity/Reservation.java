@@ -3,6 +3,7 @@ package com.med.reservationservice.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.med.reservationservice.enums.ReservationStatus;
 import com.med.reservationservice.model.Client;
+import com.med.reservationservice.model.Offer;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -18,8 +19,6 @@ public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY )
     private int id ;
-    private int nbPersons ;
-    private long totalPrice ;
     private boolean isPaid ;
     private Date reservationDate ;
     private int clientId ;
@@ -27,4 +26,8 @@ public class Reservation {
     @Enumerated(value = EnumType.STRING)
     private ReservationStatus reservationStatus ;
     private String paymentLink ;
+    private long totalAmount ;
+    private String title ;
+    @Transient
+    private Offer offer ;
 }

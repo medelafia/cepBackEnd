@@ -8,6 +8,7 @@ import com.med.accountservice.stationsManagement.repository.AirportRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.plaf.metal.MetalBorders;
 import java.sql.Date;
 import java.util.List;
 
@@ -17,6 +18,13 @@ public class FlightService {
     private FlightRepo flightRepo ;
     @Autowired
     private AirportRepo airportRepo ;
+    public Flight getFlightById(int id) {
+        if(flightRepo.findById(id).isPresent()) {
+            return flightRepo.findById(id).get()  ;
+        }else {
+            throw new NoElementException("the flight not found") ;
+        }
+    }
     public List<Flight> findAllFlightsByAirlineId(int id){
         return flightRepo.findAllByAirlineId(id) ;
     }
@@ -24,22 +32,22 @@ public class FlightService {
         return flightRepo.findAll() ;
     }
 
-    public List<Flight> findAllRoundFlight(String startAirportId, String endAirportId, Date departDate, Date returnDate) {
-        Airport startAirport = airportRepo.findById(startAirportId).orElseThrow(()->{
-            throw new NoElementException("the airport not found") ;
-        }) ;
-        Airport endAirport = airportRepo.findById(endAirportId).orElseThrow(()->{
-            throw new NoElementException("the airport not found") ;
-        }) ;
-        return flightRepo.findAllByDepartureDateAndReturnDateAndFromAndTo(departDate , returnDate , startAirport , endAirport) ;
+    public List<Flight> findAllRoundFlight(int startAirportId, int endAirportId, Date departDate, Date returnDate) {
+        if(airportRepo.findById(startAirportId).isPresent() && airportRepo.findById(endAirportId).isPresent()) {
+            Airport startAirport = airportRepo.findById(startAirportId).get() ;
+            Airport endAirport = airportRepo.findById(endAirportId).get( );
+            return flightRepo.findAllByDepartureDateAndReturnDateAndFromAndTo(departDate , returnDate , startAirport , endAirport) ;
+        }else {
+            throw new NoElementException("airports not found") ;
+        }
     }
-    public List<Flight> findAllOneWayFlights(String startAirportId , String endAirportId , Date departDate) {
-        Airport startAirport = airportRepo.findById(startAirportId).orElseThrow(()->{
-            throw new NoElementException("the airport not found") ;
-        }) ;
-        Airport endAirport = airportRepo.findById(endAirportId).orElseThrow(()->{
-            throw new NoElementException("the airport not found") ;
-        }) ;
-        return flightRepo.findAllByDepartureDateAndFromAndTo(departDate , startAirport , endAirport) ;
+    public List<Flight> findAllOneWayFlights(int startAirportId , int endAirportId , Date departDate) {
+        if(airportRepo.findById(startAirportId).isPresent() && airportRepo.findById(endAirportId).isPresent()) {
+            Airport startAirport = airportRepo.findById(startAirportId).get() ;
+            Airport endAirport = airportRepo.findById(endAirportId).get( );
+            return flightRepo.findAllByDepartureDateAndFromAndTo(departDate , startAirport , endAirport) ;
+        }else {
+            throw new NoElementException("airports not found") ;
+        }
     }
 }

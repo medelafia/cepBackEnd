@@ -1,17 +1,17 @@
 package com.med.accountservice.usersManagement.service;
 
 import com.med.accountservice.exceptions.NoElementException;
+import com.med.accountservice.imagesManagement.entity.Image;
+import com.med.accountservice.imagesManagement.service.ImageService;
 import com.med.accountservice.offersManagement.entity.Car;
 import com.med.accountservice.offersManagement.repository.CarRepo;
+import com.med.accountservice.stationsManagement.repository.AirportRepo;
+import com.med.accountservice.usersManagement.dto.CarRequest;
 import com.med.accountservice.usersManagement.entity.CarsAgency;
-import com.med.accountservice.usersManagement.mapper.ProviderMapper;
 import com.med.accountservice.usersManagement.repository.CarsAgencyRepo;
-import com.netflix.discovery.converters.Auto;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.print.attribute.standard.MediaSize;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,12 +21,35 @@ public class CarsAgencyService {
     private CarsAgencyRepo carsAgencyRepo ;
     @Autowired
     private CarRepo carRepo ;
-    public CarsAgency addCar(int providerId , Car car) {
-        CarsAgency carsAgency = carsAgencyRepo.findById(providerId).orElseThrow(()->{
+    @Autowired
+    private AirportRepo airportRepo ;
+    @Autowired
+    ImageService imageService ;
+    public List<Car> addCar(int providerId , CarRequest carRequest) {
+        if(carsAgencyRepo.findById(providerId).isPresent()) {
+            CarsAgency carsAgency = carsAgencyRepo.findById(providerId).get() ;
+            Car car = Car.builder()
+                    .airConditioning(carRequest.isAirConditioning())
+                    .available(carRequest.isAvailable())
+                    .fuelType(carRequest.getFuelType())
+                    .freeCancelation(carRequest.isFreeCancelation())
+                    .make(carRequest.getMake())
+                    .model(carRequest.getModel())
+                    .price(carRequest.getPrice())
+                    .doors(carRequest.getDoors())
+                    .seats(carRequest.getSeats())
+                    .bags(carRequest.getBags())
+                    .transType(carRequest.getTransType())
+                    .styleType(carRequest.getStyleType())
+                    .build() ;
+            car.setAirport(airportRepo.findById(carRequest.getAirportId()).get()) ;
+            Image image = imageService.updloadImage(carRequest.getImage()) ;
+            car.setImage(image) ;
+            carsAgency.createNewCar(carRepo.save(car)) ;
+            return carsAgencyRepo.save(carsAgency).getCars();
+        }else {
             throw new NoElementException("the car agency not found") ;
-        }) ;
-        carsAgency.createNewCar(carRepo.save(car)) ;
-        return carsAgencyRepo.save(carsAgency);
+        }
     }
     public List<Car> getAllCarsByCarAgencyId(int id) {
         if(carsAgencyRepo.findById(id).isPresent()) {
@@ -54,6 +77,37 @@ public class CarsAgencyService {
             }
         }else {
             throw new NoElementException("the car agency not exist") ;
+        }
+    }
+
+    public List<Car> updateCar(int providerId, int carId, CarRequest carRequest) {
+        if(carsAgencyRepo.findById(providerId).isPresent()) {
+            CarsAgency carsAgency = carsAgencyRepo.findById(providerId).get() ;
+            if(carRepo.findById(carId).isPresent()) {
+                Car car = carRepo.findById(carId).get() ;
+                car.setAvailable(carRequest.isAvailable());
+                car.setAirConditioning(carRequest.isAirConditioning());
+                car.setFreeCancelation(carRequest.isFreeCancelation());
+                car.setMake(carRequest.getMake());
+                car.setModel(carRequest.getModel());
+                car.setFuelType(carRequest.getFuelType());
+                car.setDoors(carRequest.getDoors());
+                car.setSeats(carRequest.getSeats());
+                car.setBags(carRequest.getBags());
+                car.setStyleType(carRequest.getStyleType());
+                car.setTransType(carRequest.getTransType()) ;
+                car.setPrice(carRequest.getPrice());
+                car.setAirport(airportRepo.findById(carRequest.getAirportId()).get()) ;
+                Image image = imageService.updloadImage(carRequest.getImage()) ;
+                car.setImage(image) ;
+                carRepo.save(car);
+                return carsAgencyRepo.save(carsAgency).getCars();
+            }
+            else {
+                throw new NoElementException("the car not found") ;
+            }
+        }else {
+            throw new NoElementException("the car agency not found") ;
         }
     }
 }

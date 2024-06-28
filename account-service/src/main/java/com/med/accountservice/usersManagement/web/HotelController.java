@@ -3,6 +3,7 @@ package com.med.accountservice.usersManagement.web;
 import com.med.accountservice.offersManagement.entity.Room;
 import com.med.accountservice.usersManagement.dto.HotelPosition;
 import com.med.accountservice.usersManagement.dto.ProviderResponse;
+import com.med.accountservice.usersManagement.dto.RoomRequest;
 import com.med.accountservice.usersManagement.entity.Hotel;
 import com.med.accountservice.usersManagement.service.HotelService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +26,8 @@ public class HotelController {
         return hotelService.getAllHotelsContainsKeyword(keyword) ;
     }
     @PostMapping("/{id}")
-    public Hotel addNewRoom(@RequestBody Room room  ,@PathVariable  int id)  {
-        return hotelService.addNewRoom(id , room) ;
+    public List<Room> addNewRoom(@RequestBody RoomRequest roomRequest, @PathVariable  int id)  {
+        return hotelService.addNewRoom(id , roomRequest ) ;
     }
     @GetMapping("/{id}/rooms")
     public List<Room> getAllRoomsByHotelId(@PathVariable int id) {
@@ -39,6 +40,10 @@ public class HotelController {
     @PostMapping ("/{id}/rooms/{room_id}")
     public void deleteRoom(@PathVariable int id , @PathVariable int room_id ) {
         hotelService.deleteRoom(id , room_id) ;
+    }
+    @GetMapping("/getNearby")
+    public List<ProviderResponse> getNearbyHotels(@RequestParam float lng , @RequestParam float lat) {
+        return hotelService.getNearbyHotels(lng , lat) ;
     }
 }
 

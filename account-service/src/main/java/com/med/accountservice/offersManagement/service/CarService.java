@@ -2,6 +2,8 @@ package com.med.accountservice.offersManagement.service;
 
 
 import com.med.accountservice.exceptions.NoElementException;
+import com.med.accountservice.imagesManagement.entity.Image;
+import com.med.accountservice.imagesManagement.service.ImageService;
 import com.med.accountservice.offersManagement.entity.Car;
 import com.med.accountservice.offersManagement.repository.CarRepo;
 import com.med.accountservice.stationsManagement.entity.Airport;
@@ -11,6 +13,7 @@ import com.med.accountservice.usersManagement.repository.ProviderRepo;
 import org.apache.catalina.LifecycleState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -22,18 +25,21 @@ public class CarService {
     private AirportRepo airportRepo ;
     @Autowired
     private ProviderRepo providerRepo ;
-    public List<Car> findAllCarsByProprieties() {
-        return carRepo.findAll() ;
-    }
-    public List<Car> getAllCars() {
-        List<Car> cars = carRepo.findAll() ;
-        return cars ;
+    @Autowired
+    private ImageService imageService ;
+    public List<Car> getAllCars(int airportId , int nbSeats ) {
+        if(airportId != -1 && nbSeats != -1) {
+            Airport airport = airportRepo.findById(airportId).get() ;
+            return carRepo.findAllByAirportAndSeats(airport , nbSeats ) ;
+        }
+        return carRepo.findAll();
     }
     public Car getCarById(int id) {
-        Car car = carRepo.findById(id).orElseThrow(()->{
+        if(carRepo.findById(id).isPresent()) {
+            return carRepo.findById(id).get() ;
+        }else {
             throw new NoElementException("the car doesn't exist") ;
-        }) ;
-        return car == null ? null : car ;
+        }
     }
 
     public boolean checkAvailable(int id) {

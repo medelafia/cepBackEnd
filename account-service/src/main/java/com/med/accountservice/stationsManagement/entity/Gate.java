@@ -14,7 +14,8 @@ import lombok.experimental.SuperBuilder;
 @Getter @Setter
 public class Gate {
     @Id
-    private String id ;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id ;
     private String name ;
     private String address ;
     private String city ;

@@ -7,6 +7,8 @@ import com.stripe.exception.StripeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
+
 @Service
 public class ReservationService {
     @Autowired
@@ -25,6 +27,13 @@ public class ReservationService {
     private PaymentService paymentService ;
     public ReservationService(ReservationRepo reservationRepo) {
         this.reservationRepo = reservationRepo ;
+    }
+    public Reservation findReservationById(int id) {
+        if(reservationRepo.findById(id).isPresent()) {
+            return reservationRepo.findById(id).get() ;
+        }else {
+            throw new NoSuchElementException("the reservation not found") ;
+        }
     }
     public Reservation cancelReservation(int id) {
         Reservation reservation = reservationRepo.findById(id).get();

@@ -17,8 +17,8 @@ import java.util.List;
 public class RailwayOperatorController {
     @Autowired
     private RailwayOperatorService railwayOperatorService ;
-    @PostMapping("/{id}")
-    public RailwayOperator addTrainTravel(@RequestBody TrainTravel trainTravel , @PathVariable int id) {
+    @PostMapping("/{id}/createTravel")
+    public List<TrainTravel> addTrainTravel(@RequestBody TrainTravel trainTravel , @PathVariable int id) {
         return railwayOperatorService.addNewTrainTravel(id , trainTravel) ;
     }
     @GetMapping("/{id}/trainTravels")

@@ -4,27 +4,20 @@ package com.med.accountservice.usersManagement.service;
 import com.med.accountservice.exceptions.ConflictException;
 import com.med.accountservice.exceptions.NoElementException;
 import com.med.accountservice.exceptions.PasswordIncorrectException;
-import com.med.accountservice.usersManagement.dto.AccountUpdateRequest;
-import com.med.accountservice.usersManagement.dto.CostumerUpdateRequest;
-import com.med.accountservice.usersManagement.dto.LoginRequest;
-import com.med.accountservice.usersManagement.dto.PasswordRequest;
+import com.med.accountservice.service.JwtService;
+import com.med.accountservice.usersManagement.dto.*;
 import com.med.accountservice.usersManagement.entity.Account;
 import com.med.accountservice.usersManagement.entity.Costumer;
 import com.med.accountservice.usersManagement.entity.Provider;
-import com.med.accountservice.usersManagement.entity.ResetPasswordSession;
 import com.med.accountservice.usersManagement.feignClient.MailingRepo;
 import com.med.accountservice.usersManagement.model.SimpleEmailDetails;
 import com.med.accountservice.usersManagement.repository.AccountRepo;
 import com.med.accountservice.usersManagement.repository.CostumerRepo;
 import com.med.accountservice.usersManagement.repository.ProviderRepo;
-import com.med.accountservice.usersManagement.repository.ResetPasswordSessionRepository;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import org.apache.catalina.LifecycleState;
-import org.bouncycastle.math.ec.rfc8032.Ed448;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -50,14 +43,21 @@ public class AccountService {
     @Autowired
     private PasswordEncoder passwordEncoder ;
     @Autowired
-    private ResetPasswordSessionRepository resetPasswordSessionRepository ;
-    @Autowired
     private MailingRepo mailingRepo ;
-    public Account login(LoginRequest loginRequest){
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService ;
+    @Autowired
+    private JwtService jwtService ;
+    public LoginResponse login(LoginRequest loginRequest){
         if(accountRepo.findByUsernameOrEmail(loginRequest.getUsername(), loginRequest.getUsername()).isPresent()) {
             Account account = accountRepo.findByUsernameOrEmail(loginRequest.getUsername(), loginRequest.getUsername()).get() ;
             if (passwordEncoder.matches(loginRequest.getPassword(), account.getPassword())) {
-                return account;
+                UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getUsername()) ;
+                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+                        new UsernamePasswordAuthenticationToken(userDetails , null , userDetails.getAuthorities()) ;
+                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+                String jwt = jwtService.generateJWT(usernamePasswordAuthenticationToken) ;
+                return new LoginResponse(jwt , "");
             } else {
                 throw new PasswordIncorrectException("the password is incorrect");
             }
@@ -88,26 +88,9 @@ public class AccountService {
             throw new NoElementException("the account not found") ;
         }) ;
         if(account != null ) {
-            ResetPasswordSession resetPasswordSession = ResetPasswordSession.builder()
-                    .id(UUID.randomUUID().toString())
-                    .expiredAt(Instant.now().minusSeconds(120))
-                    .userId(account.getId())
-                    .build() ;
-            resetPasswordSessionRepository.save(resetPasswordSession) ;
-            String message = "to reset your password go to this url : http://localhost:5173/resetPassword/" +resetPasswordSession.getId() ;
+            String message = "to reset your password go to this url : http://localhost:5173/resetPassword/" ;
             mailingRepo.sendMail(new SimpleEmailDetails(account.getEmail() ,"reset password" ,  message));
         }
-    }
-    public int verifierResetSession(String id) {
-        ResetPasswordSession resetPasswordSession = resetPasswordSessionRepository.findById(id).orElseThrow(()->{
-            throw new NoElementException("the session not found") ;
-        }) ;
-        if(resetPasswordSession != null ) {
-            if( resetPasswordSession.getExpiredAt().isBefore(Instant.now())){
-                return resetPasswordSession.getUserId() ;
-            }
-        }
-        return -1 ;
     }
     public void changePassword(PasswordRequest passwordRequest) {
         Account account = accountRepo.findByUsername(passwordRequest.getUsername()).orElseThrow(()->{

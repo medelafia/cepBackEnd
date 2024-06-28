@@ -14,6 +14,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor @NoArgsConstructor @SuperBuilder
 @Getter @Setter
 public class Airport extends Gate {
+    private String iata ;
     @Enumerated(value = EnumType.STRING)
     private AirportType airportType ;
 }

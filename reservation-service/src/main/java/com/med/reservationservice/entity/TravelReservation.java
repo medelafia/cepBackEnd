@@ -16,8 +16,9 @@ import java.util.Date;
 @MappedSuperclass
 @AllArgsConstructor @NoArgsConstructor @Getter @Setter @SuperBuilder
 public class TravelReservation extends Reservation{
-    private int numPlace;
-    private Date travelDate ;
-    private Time travelTime ;
+    private int nbPersons ;
+    private int nbChildrens ;
+    private long totalPrice ;
+    private int seatNumber;
     private SeatType seatType ;
 }

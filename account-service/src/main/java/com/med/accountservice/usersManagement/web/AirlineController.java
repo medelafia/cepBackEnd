@@ -20,8 +20,8 @@ public class AirlineController {
     public List<ProviderResponse> getAllAirlines() {
         return airlineService.getAllAirlines() ;
     }
-    @PostMapping("/{providerId}")
-    public Airline createFlight(@PathVariable int providerId , @RequestBody Flight flight) {
+    @PostMapping("/{providerId}/createFlight")
+    public List<Flight> createFlight(@PathVariable int providerId , @RequestBody Flight flight) {
         return airlineService.addFlight(providerId , flight) ;
     }
     @PostMapping("/")

@@ -17,10 +17,15 @@ public class Room extends Offer {
     private int nbOfRooms ;
     @Enumerated(value = EnumType.STRING)
     private RoomType roomType ;
-    private int nbOfAdults ;
-    private int nbOfChilds ;
+    private int adults ;
+    private int childs ;
     private boolean available ;
+    private int kingBeds ;
+    private int twinsBeds ;
     private int roomNumber ;
+    private boolean hasTv ;
+    private boolean freeWifi  ;
+    private boolean airConditioning;
     @OneToMany
     private List<Image> images ;
     @ManyToOne(cascade = CascadeType.REMOVE)

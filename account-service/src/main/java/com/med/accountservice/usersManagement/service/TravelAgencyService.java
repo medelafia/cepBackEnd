@@ -3,6 +3,7 @@ package com.med.accountservice.usersManagement.service;
 import com.med.accountservice.exceptions.NoElementException;
 import com.med.accountservice.offersManagement.entity.OrganizedTravel;
 import com.med.accountservice.offersManagement.repository.OrganizedTravelRepo;
+import com.med.accountservice.stationsManagement.repository.AirportRepo;
 import com.med.accountservice.usersManagement.entity.TravelAgency;
 import com.med.accountservice.usersManagement.repository.TravelAgencyRepo;
 import com.netflix.discovery.converters.Auto;
@@ -19,12 +20,19 @@ public class TravelAgencyService{
     private TravelAgencyRepo travelAgencyRepo ;
     @Autowired
     private OrganizedTravelRepo organizedTravelRepo ;
-    public TravelAgency addNewOrganizedTravel(int providerId ,OrganizedTravel organizedTravel) {
-        TravelAgency travelAgency = travelAgencyRepo.findById(providerId).orElseThrow(()->{
+    @Autowired
+    private AirportRepo airportRepo ;
+    public List<OrganizedTravel> addNewOrganizedTravel(int providerId ,OrganizedTravel organizedTravel) {
+        if(travelAgencyRepo.findById(providerId).isPresent()) {
+            TravelAgency travelAgency = travelAgencyRepo.findById(providerId).get() ;
+            organizedTravel.setOriginAirport(airportRepo.findById(organizedTravel.getOriginAirport().getId()).get());
+            travelAgency.createNewOrganizedTravel(organizedTravelRepo.save(organizedTravel)) ;
+            travelAgency = travelAgencyRepo.save(travelAgency) ;
+            return travelAgency.getTravels() ;
+        }
+        else{
             throw new NoElementException("the account not found") ;
-        }) ;
-        travelAgency.createNewOrganizedTravel(organizedTravelRepo.save(organizedTravel)) ;
-        return travelAgencyRepo.save(travelAgency) ;
+        }
     }
     public List<OrganizedTravel> getAllOrganizedTravelsByTravelAgency(int id) {
         TravelAgency travelAgency = travelAgencyRepo.findById(id).orElseThrow(()->{

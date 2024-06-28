@@ -13,7 +13,7 @@ import java.sql.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/flights")
+@RequestMapping("/offer/flights")
 @CrossOrigin("http://localhost:5173")
 public class FlightController {
     @Autowired
@@ -23,20 +23,20 @@ public class FlightController {
         return flightService.getAllFlights() ;
     }
     @GetMapping("/{id}")
-    public List<Flight> findAllFlightsByAirlineId(@PathVariable int id){
-        return flightService.findAllFlightsByAirlineId(id) ;
+    public Flight findAllFlightsByAirlineId(@PathVariable int id){
+        return flightService.getFlightById(id) ;
     }
     @GetMapping("/getRoundTrip")
-    public List<Flight> findAllRoundFlight(@RequestParam String startAirport ,
-                                           @RequestParam String endAirport ,
-                                           @RequestParam Date departDate ,
+    public List<Flight> findAllRoundFlight(@RequestParam int from  ,
+                                           @RequestParam int to ,
+                                           @RequestParam Date depDate ,
                                            @RequestParam Date returnDate ) {
-        return flightService.findAllRoundFlight(startAirport , endAirport , departDate , returnDate ) ;
+        return flightService.findAllRoundFlight(from , to , depDate , returnDate ) ;
     }
     @GetMapping("/getOneWayTrip")
-    public List<Flight> findAllOneWayFlights(@RequestParam String startAirport ,
-                                             @RequestParam String endAirport ,
-                                             @RequestParam Date departDate)  {
-        return flightService.findAllOneWayFlights(startAirport , endAirport , departDate) ;
+    public List<Flight> findAllOneWayFlights(@RequestParam int from ,
+                                             @RequestParam int to ,
+                                             @RequestParam Date depDate)  {
+        return flightService.findAllOneWayFlights(from , to , depDate) ;
     }
 }

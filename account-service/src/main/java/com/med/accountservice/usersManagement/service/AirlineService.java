@@ -4,6 +4,7 @@ import com.med.accountservice.exceptions.NoElementException;
 import com.med.accountservice.offersManagement.entity.Flight;
 import com.med.accountservice.offersManagement.entity.TrainTravel;
 import com.med.accountservice.offersManagement.repository.FlightRepo;
+import com.med.accountservice.stationsManagement.repository.AirportRepo;
 import com.med.accountservice.usersManagement.dto.ProviderResponse;
 import com.med.accountservice.usersManagement.entity.Airline;
 import com.med.accountservice.usersManagement.mapper.ProviderMapper;
@@ -21,6 +22,8 @@ public class AirlineService {
     private AirlineRepo airlineRepo  ;
     @Autowired
     private FlightRepo flightRepo ;
+    @Autowired
+    private AirportRepo airportRepo ;
     public List<ProviderResponse> getAllAirlines() {
         return airlineRepo.findAll().stream().map(airline -> {
             return ProviderMapper.toProviderResponse(airline);
@@ -31,20 +34,16 @@ public class AirlineService {
             throw new NoElementException("airline not found") ;
         }) ;
     }
-    public Airline addFlight(int providerId , Flight flight) {
-        Airline airline = airlineRepo.findById(providerId).orElseThrow(()->{
+    public List<Flight> addFlight(int providerId , Flight flight) {
+        if(airlineRepo.findById(providerId).isPresent()) {
+            Airline airline = airlineRepo.findById(providerId).get() ;
+            flight.setFrom(airportRepo.findById(flight.getFrom().getId()).get());
+            flight.setTo(airportRepo.findById(flight.getTo().getId()).get());
+            airline.getFlights().add(flightRepo.save(flight)) ;
+            airline = airlineRepo.save(airline) ;
+            return airline.getFlights() ;
+        }else {
             throw new NoElementException("the airline not found") ;
-        }) ;
-        airline.createNewFlight(flightRepo.save(flight)) ;
-        return airlineRepo.save(airline) ;
-    }
-    public void deleteFlightById(int providerId , int flightId) {
-        Airline airline = airlineRepo.findById(providerId).orElseThrow(()->{
-            throw new NoElementException("the airline not found") ;
-        }) ;
-        if( airline != null ) {
-            airline.deleteFlightById(flightId) ;
-            airlineRepo.save(airline) ;
         }
     }
     public List<Flight> getAllFlightsByAirlineId(int id) {

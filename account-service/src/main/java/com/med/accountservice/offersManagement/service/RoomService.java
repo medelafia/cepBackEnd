@@ -33,4 +33,12 @@ public class RoomService {
         });
         return room.isAvailable() ;
     }
+
+    public Room getRoomById(int id) {
+        if(roomRepo.findById(id).isPresent()) {
+            return roomRepo.findById(id).get() ;
+        }else {
+            throw new NoElementException("the room not found") ;
+        }
+    }
 }

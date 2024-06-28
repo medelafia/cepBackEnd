@@ -6,6 +6,7 @@ import com.med.accountservice.usersManagement.entity.Provider;
 public class ProviderMapper {
     public static ProviderResponse toProviderResponse(Provider provider) {
         return ProviderResponse.builder()
+                .id(provider.getId())
                 .logo(provider.getLogo())
                 .images(provider.getImages())
                 .score(provider.getScore())
@@ -13,7 +14,8 @@ public class ProviderMapper {
                 .email(provider.getEmail())
                 .webSiteUrl(provider.getWebSiteUrl())
                 .reviewsCount(provider.getNbReviews())
-                .nbPhone(provider.getTel())
+                .tel(provider.getTel())
+                .providerType(provider.getRole().substring(9))
                 .build() ;
     }
 }

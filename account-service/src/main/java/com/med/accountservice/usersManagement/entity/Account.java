@@ -1,6 +1,5 @@
 package com.med.accountservice.usersManagement.entity;
 
-import com.med.accountservice.enums.AccountType;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -20,15 +19,16 @@ public abstract class Account {
     @Column(unique = true)
     private String username ;
     private String password ;
+    private String role ;
     @NotNull
     @Column(unique = true)
     private String email ;
     private String tel ;
-    @Enumerated(value = EnumType.STRING)
-    private AccountType accountType ;
     private boolean emailVerified ;
     private boolean registerByGoogle ;
     private boolean registerByFacebook ;
+    private String country ;
+    private String address ;
     public abstract Account login(String username , String password) ;
     public abstract Account register(Account account ) ;
     public void verifyEmail() {

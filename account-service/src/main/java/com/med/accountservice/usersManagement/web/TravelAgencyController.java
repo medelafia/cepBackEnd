@@ -19,7 +19,7 @@ public class TravelAgencyController {
     @Autowired
     private TravelAgencyService travelAgencyService ;
     @PostMapping("/{id}/createTravel")
-    public TravelAgency addOrganizedTravel(@RequestBody OrganizedTravel organizedTravel, @PathVariable int id) {
+    public List<OrganizedTravel> addOrganizedTravel(@RequestBody OrganizedTravel organizedTravel, @PathVariable int id) {
         return travelAgencyService.addNewOrganizedTravel(id , organizedTravel ) ;
     }
     @GetMapping("/{id}/organizedTravels")

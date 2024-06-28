@@ -3,11 +3,12 @@ package com.med.reviewsservice.entity;
 import com.med.reviewsservice.enums.ReviewFor;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.sql.Date;
 
-@Entity
-@AllArgsConstructor @NoArgsConstructor @Getter @Setter @Builder
+@MappedSuperclass
+@AllArgsConstructor @NoArgsConstructor @Getter @Setter @SuperBuilder
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,4 +19,5 @@ public class Review {
     private String title ;
     private int providerId ;
     private int clientId ;
+
 }

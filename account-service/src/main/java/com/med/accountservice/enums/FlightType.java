@@ -1,5 +1,5 @@
 package com.med.accountservice.enums;
 
 public enum FlightType {
-    DIRECT , MULTI
+    ONE_WAY , ROUND_TRIP
 }

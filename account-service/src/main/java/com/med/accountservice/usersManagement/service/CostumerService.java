@@ -1,7 +1,5 @@
 package com.med.accountservice.usersManagement.service;
 
-import com.med.accountservice.enums.AccountType;
-import com.med.accountservice.exceptions.ExceptionDetails;
 import com.med.accountservice.exceptions.NoElementException;
 import com.med.accountservice.imagesManagement.entity.Image;
 import com.med.accountservice.imagesManagement.service.ImageService;
@@ -33,7 +31,7 @@ public class CostumerService {
     @Autowired
     private ImageService imageService;
     public Account register(Costumer costumer) {
-        costumer.setAccountType(AccountType.COSTUMER) ;
+        costumer.setRole("COSTUMER"); ;
         if(costumer.getPassword() != null ) costumer.setPassword(passwordEncoder.encode(costumer.getPassword()));
         return costumerRepo.save(costumer) ;
     }
