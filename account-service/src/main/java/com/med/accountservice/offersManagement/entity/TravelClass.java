@@ -14,4 +14,7 @@ public class TravelClass {
     private int id  ;
     private String className ;
     private float classPrice ;
+    private int price ;
+    private int nbPlaces ;
+    private int reservedPlace ;
 }

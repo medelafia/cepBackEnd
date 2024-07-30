@@ -8,5 +8,5 @@ import java.sql.Date;
 import java.util.List;
 
 public interface OrganizedTravelRepo extends JpaRepository<OrganizedTravel , Integer> {
-    public List<OrganizedTravel> findAllByDestinationAndDepartureDate(String destination , Date date) ;
+    public List<OrganizedTravel> findAllByDestinationAndOriginAndDepartureDate(String origin , String destination , Date date) ;
 }

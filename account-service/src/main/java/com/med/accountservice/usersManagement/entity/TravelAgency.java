@@ -1,5 +1,6 @@
 package com.med.accountservice.usersManagement.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.med.accountservice.offersManagement.entity.OrganizedTravel;
 import com.med.accountservice.offersManagement.entity.Travel;
 import jakarta.persistence.*;
@@ -17,7 +18,11 @@ import java.util.stream.Collectors;
 @Setter
 @NoArgsConstructor
 public class TravelAgency extends Provider{
+    public TravelAgency(Provider provider) {
+        super(provider);
+    }
     @OneToMany(cascade = CascadeType.REMOVE)
+    @JsonIgnore
     private List<OrganizedTravel> travels ;
     public List<OrganizedTravel> createNewOrganizedTravel(OrganizedTravel organizedTravel) {
         travels.add(organizedTravel) ;

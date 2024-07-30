@@ -15,10 +15,6 @@ import java.util.List;
 public class TrainTravelController {
     @Autowired
     private TrainTravelService trainTravelService ;
-    @GetMapping("/")
-    public List<TrainTravel> getAllTrainTravels() {
-        return trainTravelService.getAllTrainTravels() ;
-    }
     @GetMapping("/{id}")
     public TrainTravel getTrainTravelById(@PathVariable int id ) {
         return trainTravelService.getTrainTravelById(id) ;

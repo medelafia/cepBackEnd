@@ -1,7 +1,9 @@
 package com.med.accountservice.offersManagement.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.med.accountservice.enums.RoomType;
 import com.med.accountservice.imagesManagement.entity.Image;
+import com.med.accountservice.usersManagement.dto.ProviderResponse;
 import com.med.accountservice.usersManagement.entity.Hotel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -14,7 +16,6 @@ import java.util.List;
 
 @Entity @AllArgsConstructor @Getter @Setter @SuperBuilder @NoArgsConstructor
 public class Room extends Offer {
-    private int nbOfRooms ;
     @Enumerated(value = EnumType.STRING)
     private RoomType roomType ;
     private int adults ;
@@ -26,13 +27,9 @@ public class Room extends Offer {
     private boolean hasTv ;
     private boolean freeWifi  ;
     private boolean airConditioning;
-    @OneToMany
-    private List<Image> images ;
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @OneToOne
+    private Image image ;
+    @ManyToOne
+    @JsonIgnore
     private Hotel hotel ;
-
-    public List<Image> addImage(Image image) {
-        this.getImages().add(image) ;
-        return this.getImages() ;
-    }
 }

@@ -22,6 +22,4 @@ public class Gate {
     private String country ;
     private float lat ;
     private float lng ;
-    private String emailContact ;
-    private String nbPhoneContact;
 }

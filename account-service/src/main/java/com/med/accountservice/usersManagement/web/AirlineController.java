@@ -20,19 +20,16 @@ public class AirlineController {
     public List<ProviderResponse> getAllAirlines() {
         return airlineService.getAllAirlines() ;
     }
-    @PostMapping("/{providerId}/createFlight")
-    public List<Flight> createFlight(@PathVariable int providerId , @RequestBody Flight flight) {
-        return airlineService.addFlight(providerId , flight) ;
+    @PostMapping("/createFlight")
+    public List<Flight> createFlight( @RequestBody Flight flight) {
+        return airlineService.addFlight(flight) ;
     }
-    @PostMapping("/")
-    public void deleteFlightById() {
+    @GetMapping("/flights")
+    public List<Flight> getAllFlightsByAirlineId() {
+        return airlineService.getAllFlights();
     }
-    @GetMapping("/{id}/flights")
-    public List<Flight> getAllFlightsByAirlineId(@PathVariable int id ) {
-        return airlineService.getAllFlightsByAirlineId(id);
-    }
-    @PostMapping("/{id}/flights/{flight_id}")
-    public void deleteFlight(@PathVariable int id , @PathVariable int flight_id) {
-        airlineService.deleteFlight(id , flight_id );
+    @PostMapping("/flights/{flight_id}")
+    public void deleteFlight(@PathVariable int flight_id) {
+        airlineService.deleteFlight(flight_id );
     }
 }

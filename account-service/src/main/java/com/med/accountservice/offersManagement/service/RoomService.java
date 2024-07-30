@@ -3,9 +3,11 @@ package com.med.accountservice.offersManagement.service;
 import com.med.accountservice.exceptions.NoElementException;
 import com.med.accountservice.offersManagement.entity.Room;
 import com.med.accountservice.offersManagement.repository.RoomRepo;
+import com.med.accountservice.usersManagement.mapper.ProviderMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RoomService {
@@ -18,7 +20,10 @@ public class RoomService {
         rooms.stream().filter(room->{
             return room.isAvailable() ;
         }).toList();
-        return rooms ;
+        return rooms.stream().map(room -> {
+            room.setProvider(ProviderMapper.toProviderResponse(room.getHotel()));
+            return room ;
+        }).collect(Collectors.toList());
     }
     public Room setAvailable(int id) {
         Room room = roomRepo.findById(id).orElseThrow(()->{

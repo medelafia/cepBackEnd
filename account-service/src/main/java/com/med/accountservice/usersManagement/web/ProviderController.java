@@ -1,14 +1,13 @@
 package com.med.accountservice.usersManagement.web;
 
 import com.med.accountservice.imagesManagement.entity.Image;
+import com.med.accountservice.reservationManagement.entity.Reservation;
+import com.med.accountservice.reviewsManagement.entity.Review;
 import com.med.accountservice.usersManagement.dto.ProviderResponse;
 import com.med.accountservice.usersManagement.dto.ProviderUpdateRequest;
 import com.med.accountservice.usersManagement.entity.*;
-import com.med.accountservice.usersManagement.model.Review;
 import com.med.accountservice.usersManagement.service.AccountService;
 import com.med.accountservice.usersManagement.service.ProviderService;
-import com.netflix.discovery.converters.Auto;
-import feign.template.HeaderTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,47 +23,30 @@ public class ProviderController {
     @Autowired
     private ProviderService providerService ;
     @GetMapping("/")
-    public List<ProviderResponse> getAllProviders(){
-        return providerService.getAllProviders() ;
+    public ProviderResponse getMyInfo() {
+        return providerService.getProviderInfo() ;
     }
-    @GetMapping("/{id}")
-    public ProviderResponse getProvider(@PathVariable int id){
-        return providerService.getProviderInfo(id) ;
+    @PostMapping("/changeLogo")
+    public Provider changeLogo(MultipartFile image) {
+        return providerService.changeLogo(image) ;
     }
-    @PostMapping("/register/airline")
-    public Provider register(@RequestBody Airline airline) {
-        return providerService.register(airline);
+    @PostMapping("/update")
+    public Provider updateProviderInfo(@RequestBody ProviderUpdateRequest providerUpdateRequest ) {
+        return providerService.updateProviderInfo(providerUpdateRequest) ;
     }
-    @PostMapping("/register/hotel")
-    public Provider register(@RequestBody Hotel hotel) {
-        return providerService.register(hotel) ;
+    @GetMapping("/getImages")
+    public List<Image> getImages() {
+        return providerService.getAllImages() ;
     }
-    @PostMapping("/register/railwaysOperator")
-    public Provider register(@RequestBody RailwayOperator railwayOperator) {
-        return providerService.register(railwayOperator) ;
+    @PostMapping("/addImages")
+    public List<Image> addImages(MultipartFile[] images) {
+        return providerService.addImages(images ) ;
     }
-    @PostMapping("/register/carAgency")
-    public Provider register(@RequestBody CarsAgency carsAgency) {
-        return providerService.register(carsAgency) ;
+    @PostMapping("/deleteImages")
+    public void deleteImages(@RequestBody List<Integer> imagesIds ) {
+        providerService.deleteImages(imagesIds ) ;
     }
-    @PostMapping("/register/travelAgency")
-    public Provider register(@RequestBody TravelAgency travelAgency){
-        return providerService.register(travelAgency) ;
-    }
-    @PostMapping("/{id}/changeLogo")
-    public Provider changeLogo(@PathVariable int id ,  MultipartFile image) {
-        return providerService.changeLogo(id , image) ;
-    }
-    @PostMapping("/{id}/update")
-    public Provider updateProviderInfo(@PathVariable int id , @RequestBody ProviderUpdateRequest providerUpdateRequest ) {
-        return providerService.updateProviderInfo(id , providerUpdateRequest) ;
-    }
-    @GetMapping("/{id}/getImages")
-    public List<Image> getImages(@PathVariable int id) {
-        return providerService.getAllImages(id) ;
-    }
-    @PostMapping("/{id}/addImages")
-    public List<Image> addImages(@PathVariable int id , MultipartFile[] images) {
-        return providerService.addImages(id , images ) ;
+    @GetMapping("/reservations")
+    public List<Reservation> getAllReservation() {return providerService.getAllReservations() ;
     }
 }

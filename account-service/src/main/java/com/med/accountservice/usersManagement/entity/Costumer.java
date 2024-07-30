@@ -2,7 +2,7 @@ package com.med.accountservice.usersManagement.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.med.accountservice.imagesManagement.entity.Image;
-import com.med.accountservice.usersManagement.model.RecommendationProfile;
+import com.med.accountservice.recommendationProfileManagement.entity.RecommendationProfile;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -22,9 +22,7 @@ public class Costumer extends Account {
     private String gender ;
     private int age ;
     private boolean recommendationProfileActivation ;
-    @JsonIgnore
-    private int recommendationProfileId ;
-    @Transient
+    @OneToOne
     private RecommendationProfile recommendationProfile ;
     @OneToOne
     private Image profileImage ;

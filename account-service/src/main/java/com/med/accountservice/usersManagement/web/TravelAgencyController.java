@@ -1,34 +1,28 @@
 package com.med.accountservice.usersManagement.web;
-
 import com.med.accountservice.offersManagement.entity.OrganizedTravel;
-import com.med.accountservice.offersManagement.entity.TrainTravel;
-import com.med.accountservice.usersManagement.entity.TravelAgency;
 import com.med.accountservice.usersManagement.service.TravelAgencyService;
-import jakarta.ws.rs.Path;
-import jdk.dynalink.linker.LinkerServices;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-
 @RestController
 @RequestMapping("/travelAgencies")
 @CrossOrigin("http://localhost:5173")
 public class TravelAgencyController {
     @Autowired
     private TravelAgencyService travelAgencyService ;
-    @PostMapping("/{id}/createTravel")
-    public List<OrganizedTravel> addOrganizedTravel(@RequestBody OrganizedTravel organizedTravel, @PathVariable int id) {
-        return travelAgencyService.addNewOrganizedTravel(id , organizedTravel ) ;
+    @PostMapping("/createTravel")
+    public List<OrganizedTravel> addOrganizedTravel(@RequestPart("cover") MultipartFile cover, @RequestPart("travel") OrganizedTravel organizedTravel) {
+        return travelAgencyService.addNewOrganizedTravel(cover , organizedTravel) ;
     }
-    @GetMapping("/{id}/organizedTravels")
-    public List<OrganizedTravel> getAllOrganizedTravelsByTravelsAgencyId(@PathVariable int id) {
-        return travelAgencyService.getAllOrganizedTravelsByTravelAgency(id);
+    @GetMapping("/organizedTravels")
+    public List<OrganizedTravel> getAllOrganizedTravels() {
+        return travelAgencyService.getAllOrganizedTravels();
     }
-    @PostMapping("/{id}/organizedTravels/{travel_id}")
-    public void deleteOrganizedTravel(@PathVariable int id , @PathVariable int travel_id) {
-        travelAgencyService.deleteOrganizedTravel(id , travel_id) ;
+    @PostMapping("/organizedTravels/{travel_id}")
+    public void deleteOrganizedTravel(@PathVariable int travel_id) {
+        travelAgencyService.deleteOrganizedTravel(travel_id) ;
     }
 }
 

@@ -12,16 +12,19 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
-@Entity @AllArgsConstructor @SuperBuilder
+@Entity @AllArgsConstructor
 @Getter @Setter
 @NoArgsConstructor
+@SuperBuilder
 public class TrainTravel extends Travel {
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    private String trainName ;
+    @JsonIgnore
+    @ManyToOne
     RailwayOperator railwayOperator ;
     @ManyToOne
     TrainStation from ;
     @OneToOne
     TrainStation to ;
-    @ManyToMany(fetch = FetchType.EAGER)
-    List<TrainStation> passedTrainStations ;
+    @ManyToMany
+    List<TravelClass> trainTravelClasses ;
 }

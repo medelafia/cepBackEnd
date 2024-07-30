@@ -1,5 +1,6 @@
 package com.med.accountservice.usersManagement.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.med.accountservice.offersManagement.entity.Room;
 import jakarta.persistence.*;
 import lombok.*;
@@ -14,7 +15,13 @@ public class Hotel extends Provider{
     private int stars ;
     private float longitude ;
     private float latitude ;
-    @OneToMany(cascade = CascadeType.REMOVE)
+    @ManyToMany
+    private List<Amenitie> amenities ;
+    public Hotel(Provider provider) {
+        super(provider);
+    }
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Room>  rooms ;
     public List<Room> createNewRoom(Room room){
         this.rooms.add(room) ;

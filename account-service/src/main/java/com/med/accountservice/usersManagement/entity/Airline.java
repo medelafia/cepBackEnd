@@ -1,6 +1,7 @@
 package com.med.accountservice.usersManagement.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.med.accountservice.offersManagement.entity.Flight;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -17,7 +18,11 @@ import java.util.stream.Collectors;
 @Setter
 @NoArgsConstructor
 public class Airline extends Provider {
-    @OneToMany(cascade = CascadeType.REMOVE)
+    public Airline(Provider provider) {
+        super(provider);
+    }
+    @OneToMany(cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Flight> flights ;
     public List<Flight> createNewFlight(Flight flight) {
         this.flights.add(flight) ;

@@ -15,7 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.sql.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CarService {
@@ -27,12 +29,14 @@ public class CarService {
     private ProviderRepo providerRepo ;
     @Autowired
     private ImageService imageService ;
+    public List<Car> getAllCars() {
+        return this.carRepo.findAll() ;
+    }
     public List<Car> getAllCars(int airportId , int nbSeats ) {
-        if(airportId != -1 && nbSeats != -1) {
-            Airport airport = airportRepo.findById(airportId).get() ;
-            return carRepo.findAllByAirportAndSeats(airport , nbSeats ) ;
-        }
-        return carRepo.findAll();
+        return carRepo.findAllByAirportAndSeats(airportRepo.findById(airportId).get() , nbSeats ).stream().map(car -> {
+            car.setProvider(ProviderMapper.toProviderResponse(car.getCarsAgency()));
+            return car ;
+        }).collect(Collectors.toList());
     }
     public Car getCarById(int id) {
         if(carRepo.findById(id).isPresent()) {
@@ -42,7 +46,7 @@ public class CarService {
         }
     }
 
-    public boolean checkAvailable(int id) {
+    public boolean checkAvailable(int id , Date checkIn , Date checkOut) {
         Car car =  this.getCarById(id) ;
         if(car != null) {
             return car.isAvailable()  ;

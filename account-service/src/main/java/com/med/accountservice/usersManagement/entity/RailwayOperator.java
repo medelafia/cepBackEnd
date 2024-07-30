@@ -1,5 +1,6 @@
 package com.med.accountservice.usersManagement.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.med.accountservice.offersManagement.entity.TrainTravel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -16,7 +17,11 @@ import java.util.stream.Collectors;
 @Setter
 @NoArgsConstructor
 public class RailwayOperator extends Provider{
+    public RailwayOperator(Provider provider) {
+        super(provider);
+    }
     @ManyToMany(cascade = CascadeType.REMOVE)
+    @JsonIgnore
     private List<TrainTravel> travelList ;
     public List<TrainTravel> createNewTrainTravel(TrainTravel trainTravel) {
         travelList.add(trainTravel);

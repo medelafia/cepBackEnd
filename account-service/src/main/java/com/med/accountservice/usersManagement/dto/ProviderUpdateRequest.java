@@ -9,5 +9,4 @@ public class ProviderUpdateRequest {
     private String name ;
     private String webSite ;
     private String fax ;
-    private String address  ;
 }

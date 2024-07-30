@@ -3,7 +3,6 @@ package com.med.accountservice.usersManagement.service;
 import com.med.accountservice.exceptions.NoElementException;
 import com.med.accountservice.usersManagement.entity.Account;
 import com.med.accountservice.usersManagement.repository.AccountRepo;
-import com.netflix.discovery.converters.Auto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

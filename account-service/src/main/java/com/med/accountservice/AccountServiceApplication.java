@@ -1,23 +1,30 @@
 package com.med.accountservice;
 
 import com.cloudinary.Cloudinary;
+import com.med.accountservice.enums.ProviderType;
+import com.med.accountservice.usersManagement.dto.ProviderRequest;
+import com.med.accountservice.usersManagement.dto.ProviderResponse;
+import com.med.accountservice.usersManagement.entity.Admin;
+import com.med.accountservice.usersManagement.entity.Provider;
+import com.med.accountservice.usersManagement.service.AccountService;
 import com.med.accountservice.usersManagement.service.ProviderService;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.impl.DefaultJwtBuilder;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
+
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
 @SpringBootApplication
-@EnableFeignClients
 public class AccountServiceApplication {
 
     public static void main(String[] args) {
@@ -39,9 +46,16 @@ public class AccountServiceApplication {
     }
     //@Bean
     public CommandLineRunner start(
-            ProviderService providerService
+            AccountService accountService
     ) {
         return ar -> {
+            accountService.register(Admin.builder()
+                    .registerByGoogle(false)
+                    .emailVerified(false)
+                    .password("admin")
+                    .username("admin")
+                    .email("admin@gmail.com")
+                    .build());
         };
     }
     @Bean

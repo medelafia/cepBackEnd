@@ -3,15 +3,17 @@ package com.med.accountservice.usersManagement.service;
 import com.med.accountservice.exceptions.NoElementException;
 import com.med.accountservice.imagesManagement.entity.Image;
 import com.med.accountservice.imagesManagement.service.ImageService;
+import com.med.accountservice.reservationManagement.entity.Reservation;
+import com.med.accountservice.reservationManagement.service.ReservationService;
+import com.med.accountservice.reviewsManagement.service.ReviewService;
 import com.med.accountservice.usersManagement.dto.ProviderResponse;
 import com.med.accountservice.usersManagement.dto.ProviderUpdateRequest;
 import com.med.accountservice.usersManagement.entity.*;
-import com.med.accountservice.usersManagement.feignClient.ReviewsRepo;
 import com.med.accountservice.usersManagement.mapper.ProviderMapper;
-import com.med.accountservice.usersManagement.model.Review;
 import com.med.accountservice.usersManagement.repository.*;
 import org.aspectj.apache.bcel.classfile.Module;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,8 +25,6 @@ import java.util.stream.Collectors;
 public class ProviderService {
     @Autowired
     ProviderRepo providerRepo ;
-    @Autowired
-    ReviewsRepo reviewsRepo ;
     @Autowired
     AirlineRepo airlineRepo ;
     @Autowired
@@ -39,95 +39,66 @@ public class ProviderService {
     HotelRepo hotelRepo ;
     @Autowired
     ImageService imageService ;
+    @Autowired
+    ReviewService reviewService ;
+    @Autowired
+    ReservationService reservationService ;
+    public Provider getAuthenticatedProvider() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName() ;
+        Provider provider = providerRepo.findByUsername(username).get() ;
+        return provider ;
+    }
     public ProviderResponse getProviderInfo(int id) {
-        if(providerRepo.findById(id).isPresent()) {
-            Provider provider = providerRepo.findById(id).get() ;
-            return ProviderMapper.toProviderResponse(provider);
-        }else {
-            throw new NoElementException("the provider not found") ;
-        }
+        Provider provider = this.providerRepo.findById(id).get();
+        provider.setScore(reviewService.getProviderScore(id));
+        provider.setNbReviews(reviewService.getProviderReviewsCount(id));
+        return ProviderMapper.toProviderResponse(provider);
     }
-    public Provider register(Airline airline) {
-        airline.setPassword(passwordEncoder.encode(airline.getPassword()));
-        airline.setRole("PROVIDER_AIRLINE");
-        return airlineRepo.save(airline) ;
+    public ProviderResponse getProviderInfo() {
+        Provider provider = this.getAuthenticatedProvider();
+        provider.setScore(reviewService.getProviderScore(provider.getId()));
+        provider.setNbReviews(reviewService.getProviderReviewsCount(provider.getId()));
+        return ProviderMapper.toProviderResponse(provider);
     }
-    public Provider register(CarsAgency carsAgency) {
-        carsAgency.setPassword(passwordEncoder.encode(carsAgency.getPassword()));
-        carsAgency.setRole("PROVIDER_CARAGENCY");
-        return carsAgencyRepo.save(carsAgency) ;
+    public Provider changeLogo(MultipartFile file) {
+        Provider provider = this.getAuthenticatedProvider() ;
+        Image image = imageService.updloadImage(file) ;
+        provider.changeLogo(image) ;
+        return providerRepo.save(provider) ;
     }
-    public Provider register(Hotel hotel) {
-        hotel.setRole("PROVIDER_HOTEL");
-        hotel.setPassword(passwordEncoder.encode(hotel.getPassword()));
-        return hotelRepo.save(hotel) ;
-    }
-    public Provider register(RailwayOperator railwayOperator) {
-        railwayOperator.setPassword(passwordEncoder.encode(railwayOperator.getPassword()));
-        railwayOperator.setRole("PROVIDER_RAILWAYOPERATOR");
-        return railwayOperatorRepo.save(railwayOperator) ;
-    }
-    public Provider register(TravelAgency travelAgency) {
-        travelAgency.setPassword(passwordEncoder.encode(travelAgency.getPassword()));
-        travelAgency.setRole("PROVIDER_TRAVELAGENCY");
-        return travelAgencyRepo.save(travelAgency) ;
-    }
-    public Review writeReview(Review review) {
-        Provider provider = providerRepo.findById(review.getProviderId()).orElseThrow(()->{
-            throw new NoElementException("the provider not found") ;
-        }) ;
-        if(provider != null) {
-            return reviewsRepo.writeReview(review) ;
-        }
-        return null ;
-    }
-    public Provider changeLogo(int id , MultipartFile file) {
-        Provider provider = providerRepo.findById(id).orElseThrow(()->{
-            throw new NoElementException("the provider not found") ;
-        }) ;
-        if(provider != null) {
-            Image image = imageService.updloadImage(file) ;
-            provider.changeLogo(image) ;
-            return providerRepo.save(provider) ;
-        }
-        return null ;
+    public Provider updateProviderInfo(ProviderUpdateRequest providerUpdateRequest) {
+        Provider provider = this.getAuthenticatedProvider();
+        provider.setFax(providerUpdateRequest.getFax());
+        provider.setName(providerUpdateRequest.getName());
+        provider.setWebSiteUrl(providerUpdateRequest.getWebSite());
+        return providerRepo.save(provider) ;
     }
 
+    public List<Image> getAllImages() {
+        return this.getAuthenticatedProvider().getImages() ;
+    }
+
+    public List<Image> addImages(MultipartFile[] images) {
+        Provider provider = this.getAuthenticatedProvider() ;
+        List<Image> imagesList = imageService.uploadImages(images);
+        provider.addImages(imagesList) ;
+        return providerRepo.save(provider).getImages() ;
+    }
+
+    public void deleteImages(List<Integer> imagesIds) {
+        if(!imagesIds.isEmpty()) {
+            Provider provider = this.getAuthenticatedProvider() ;
+            for( int imageId : imagesIds) {
+                provider.getImages().stream().filter(image -> image.getId() != imageId) ;
+            }
+            provider.setImages(provider.getImages());
+            providerRepo.save(provider) ;
+        }
+    }
+    public List<Reservation> getAllReservations() {
+        return null ;
+    }
     public List<ProviderResponse> getAllProviders() {
-        List<Provider> providers = providerRepo.findAll() ;
-        List<ProviderResponse> providerResponses = providers.stream().map(provider -> ProviderMapper.toProviderResponse(provider)).collect(Collectors.toList()); ;
-        return providerResponses;
-    }
-
-    public Provider updateProviderInfo(int id , ProviderUpdateRequest providerUpdateRequest) {
-        if(providerRepo.findById(id).isPresent()) {
-            Provider provider = providerRepo.findById(id).get() ;
-            provider.setFax(providerUpdateRequest.getFax());
-            provider.setAddress(providerUpdateRequest.getAddress());
-            provider.setName(providerUpdateRequest.getName());
-            provider.setWebSiteUrl(providerUpdateRequest.getWebSite());
-            return providerRepo.save(provider) ;
-        }else {
-            throw new NoElementException("the provider not found") ;
-        }
-    }
-
-    public List<Image> getAllImages(int id) {
-        if(providerRepo.findById(id).isPresent()) {
-            return providerRepo.findById(id).get().getImages();
-        } else {
-            throw new NoElementException("the provider not found") ;
-        }
-    }
-
-    public List<Image> addImages(int id, MultipartFile[] images) {
-        if(providerRepo.findById(id).isPresent()) {
-            Provider provider = providerRepo.findById(id).get() ;
-            List<Image> imagesList = imageService.uploadImages(images);
-            provider.addImages(imagesList) ;
-            return providerRepo.save(provider).getImages() ;
-        }else {
-            throw new NoElementException("the provider not found") ;
-        }
+        return providerRepo.findAll().stream().map(provider -> ProviderMapper.toProviderResponse(provider)).collect(Collectors.toList());
     }
 }

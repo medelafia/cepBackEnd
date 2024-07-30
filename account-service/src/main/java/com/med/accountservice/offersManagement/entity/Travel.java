@@ -17,14 +17,10 @@ import java.sql.Time;
 @Getter @Setter
 @SuperBuilder
 public class Travel extends Offer {
-    private String origin ;
-    private String destination ;
     //
     private int distance ;
-    private int nbOfPlaces ;
     private int nbOfStops ;
-    private int reservedPlaces ;
-    private int travelDuration ;
+    private Time travelDuration ;
     //departure info
     private Date departureDate ;
     private Time departureTime ;
@@ -32,18 +28,4 @@ public class Travel extends Offer {
     private Time arrivedTime ;
     //return info
     private Date returnDate ;
-    public int incrementReservedPlaces(int count) {
-        if(getReservedPlaces() + count > getNbOfPlaces()) {
-            this.setReservedPlaces(this.getReservedPlaces() + count) ;
-            return nbOfPlaces ;
-        }
-        return -1 ;
-    }
-    public int decrementReservedPlaces(int count) {
-        if(this.getReservedPlaces() - count < 0 ) {
-            this.setReservedPlaces(this.getReservedPlaces() - count) ;
-            return nbOfPlaces ;
-        }
-        return -1 ;
-    }
 }

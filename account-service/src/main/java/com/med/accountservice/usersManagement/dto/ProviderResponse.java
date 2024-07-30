@@ -1,7 +1,7 @@
 package com.med.accountservice.usersManagement.dto;
 
 import com.med.accountservice.imagesManagement.entity.Image;
-import com.med.accountservice.usersManagement.model.Review;
+import com.med.accountservice.reviewsManagement.entity.Review;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,8 +20,8 @@ public class ProviderResponse {
     private Image logo ;
     private float score ;
     private int reviewsCount ;
+    private String description ;
     private List<Image> images ;
-    private List<Review> reviews ;
     private String providerType ;
     private String fax ;
 }

@@ -9,7 +9,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -18,16 +17,18 @@ public class SecurityConfig {
         httpSecurity.csrf(csrf -> csrf.disable()) ;
         httpSecurity.sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) ;
         httpSecurity.authorizeHttpRequests(auth ->
-                auth
+                auth.requestMatchers("/provider/**").hasAnyAuthority("PROVIDER_AIRLINE" , "PROVIDER_CARAGENCY" , "PROVIDER_HOTEL" , "PROVIDER_TRAVELAGENCY" , "PROVIDER_RAILWAYOPERATOR")
                         .requestMatchers("/airlines/**").hasAuthority("PROVIDER_AIRLINE")
                         .requestMatchers("/carsAgencies/**").hasAuthority("PROVIDER_CARAGENCY")
                         .requestMatchers("/hotels/**").hasAuthority("PROVIDER_HOTEL")
                         .requestMatchers("/travelsAgencies/**").hasAuthority("PROVIDER_TRAVELAGENCY")
                         .requestMatchers("/railwaysOperators/**").hasAuthority("PROVIDER_RAILWAYOPERATOR")
                         .requestMatchers("/costumers/**").hasAuthority("COSTUMER")
-                        .requestMatchers("/gates/**",
-                                "/offer/**" ,
-                                "/accounts/login/**" ).permitAll()
+                        .requestMatchers("/admin/**").hasAuthority("ADMIN")
+                        .requestMatchers("/accounts/login/**" ,
+                                "/accounts/loginByEmail/**" ,
+                                "/accounts/register/**" ,
+                                "/public/**").permitAll()
                         .anyRequest().authenticated());
         httpSecurity.addFilterBefore(new JwtFilter() , BasicAuthenticationFilter.class) ;
         return httpSecurity.build();

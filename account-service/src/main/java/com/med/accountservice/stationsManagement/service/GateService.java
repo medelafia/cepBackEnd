@@ -22,19 +22,19 @@ public class GateService {
     public List<Gate> getAllGates() {
         return gateRepo.findAll() ;
     }
-    public Gate addGate(Airport airport) {
-        return airportRepo.save(airport) ;
-    }
-    public Gate addGate(TrainStation trainStation ) {
-        return trainStationRepo.save(trainStation) ;
-    }
     public List<Airport> getAllAirports(){
         return airportRepo.findAll() ;
     }
     public List<TrainStation> getAllTrainStations() {
         return trainStationRepo.findAll() ;
     }
-    public void deleteGate(String id) {
+    public Gate addGate(Airport airport) {
+        return airportRepo.save(airport) ;
+    }
+    public Gate addGate(TrainStation trainStation ) {
+        return trainStationRepo.save(trainStation) ;
+    }
+    public void deleteGate(int id) {
         gateRepo.deleteById(id) ;
     }
 }

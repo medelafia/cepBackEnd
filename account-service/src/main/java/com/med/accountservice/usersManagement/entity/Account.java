@@ -23,12 +23,9 @@ public abstract class Account {
     @NotNull
     @Column(unique = true)
     private String email ;
-    private String tel ;
     private boolean emailVerified ;
     private boolean registerByGoogle ;
-    private boolean registerByFacebook ;
-    private String country ;
-    private String address ;
+
     public abstract Account login(String username , String password) ;
     public abstract Account register(Account account ) ;
     public void verifyEmail() {

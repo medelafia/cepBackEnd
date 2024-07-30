@@ -1,6 +1,7 @@
 package com.med.accountservice.offersManagement.entity;
 
 
+import com.med.accountservice.usersManagement.dto.ProviderResponse;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,4 +16,6 @@ public class Offer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id ;
     private float price ;
+    @Transient
+    private ProviderResponse provider;
 }

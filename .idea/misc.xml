@@ -26,10 +26,18 @@
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/cloud-service/pom.xml" />
+        <option value="$PROJECT_DIR$/config-server/pom.xml" />
         <option value="$PROJECT_DIR$/destination-service/pom.xml" />
+        <option value="$PROJECT_DIR$/discovery-service/pom.xml" />
         <option value="$PROJECT_DIR$/gate-service/pom.xml" />
+        <option value="$PROJECT_DIR$/gateway-service/pom.xml" />
         <option value="$PROJECT_DIR$/image-service/pom.xml" />
+        <option value="$PROJECT_DIR$/mailing-service/pom.xml" />
         <option value="$PROJECT_DIR$/offers-services/pom.xml" />
+        <option value="$PROJECT_DIR$/other-services/pom.xml" />
+        <option value="$PROJECT_DIR$/recommendation-profile-service/pom.xml" />
+        <option value="$PROJECT_DIR$/reservation-service/pom.xml" />
+        <option value="$PROJECT_DIR$/reviews-service/pom.xml" />
         <option value="$PROJECT_DIR$/users-services/pom.xml" />
       </set>
     </option>

@@ -15,10 +15,6 @@ import java.util.List;
 public class RoomController {
     @Autowired
     private RoomService roomService ;
-    @GetMapping("/getAvailableRooms/{id}")
-    public List<Room> findAllAvailableRoomsByHotelId(@PathVariable int id) {
-        return roomService.findAllAvailableRooms(id);
-    }
     @PostMapping("/setAvailable")
     public Room setAvailable(@RequestParam int id) {
         return roomService.setAvailable(id) ;
@@ -26,10 +22,6 @@ public class RoomController {
     @GetMapping("/isAvailable/{id}")
     public boolean checkAvailable(@PathVariable int id) {
         return roomService.checkAvailable(id);
-    }
-    @GetMapping("/{id}")
-    public Room getRoomById(@PathVariable int id) {
-        return roomService.getRoomById(id) ;
     }
 }
 

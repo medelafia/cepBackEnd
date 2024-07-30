@@ -1,6 +1,7 @@
 package com.med.accountservice.offersManagement.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.med.accountservice.enums.FuelType;
 import com.med.accountservice.enums.StyleType;
 import com.med.accountservice.enums.TransType;
@@ -35,7 +36,8 @@ public class Car extends Offer {
     private boolean airConditioning ;
     private boolean freeCancelation ;
     private boolean available  ;
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
+    @JsonIgnore
     private CarsAgency carsAgency ;
     @ManyToOne
     private Airport airport ;
